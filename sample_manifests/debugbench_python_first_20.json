@@ -1,0 +1,31 @@
+{
+  "manifest_version": "1.0",
+  "dataset": "Rtian/DebugBench",
+  "split": "test",
+  "selection": "First 20 rows after filtering the committed cache to language == python3",
+  "dataset_sha256": "8a48789a7d5968d832a8756f6cca607b97a4a7e002bd746c90661527ed95f8c8",
+  "tests_available": false,
+  "samples": [
+    {"dataset_index": 2839, "slug": "moving-stones-until-consecutive-ii", "language": "python3"},
+    {"dataset_index": 2840, "slug": "largest-number-after-mutating-substring", "language": "python3"},
+    {"dataset_index": 2841, "slug": "nim-game", "language": "python3"},
+    {"dataset_index": 2842, "slug": "find-all-possible-recipes-from-given-supplies", "language": "python3"},
+    {"dataset_index": 2843, "slug": "sequential-digits", "language": "python3"},
+    {"dataset_index": 2844, "slug": "check-if-string-is-transformable-with-substring-sort-operations", "language": "python3"},
+    {"dataset_index": 2845, "slug": "increasing-order-search-tree", "language": "python3"},
+    {"dataset_index": 2846, "slug": "check-if-one-string-swap-can-make-strings-equal", "language": "python3"},
+    {"dataset_index": 2847, "slug": "disconnect-path-in-a-binary-matrix-by-at-most-one-flip", "language": "python3"},
+    {"dataset_index": 2848, "slug": "smallest-string-starting-from-leaf", "language": "python3"},
+    {"dataset_index": 2849, "slug": "online-election", "language": "python3"},
+    {"dataset_index": 2850, "slug": "number-complement", "language": "python3"},
+    {"dataset_index": 2851, "slug": "binary-tree-level-order-traversal-ii", "language": "python3"},
+    {"dataset_index": 2852, "slug": "maximum-of-absolute-value-expression", "language": "python3"},
+    {"dataset_index": 2853, "slug": "minimum-cost-to-make-at-least-one-valid-path-in-a-grid", "language": "python3"},
+    {"dataset_index": 2854, "slug": "alternating-digit-sum", "language": "python3"},
+    {"dataset_index": 2855, "slug": "best-time-to-buy-and-sell-stock-ii", "language": "python3"},
+    {"dataset_index": 2856, "slug": "substring-with-concatenation-of-all-words", "language": "python3"},
+    {"dataset_index": 2857, "slug": "merge-k-sorted-lists", "language": "python3"},
+    {"dataset_index": 2858, "slug": "find-the-string-with-lcp", "language": "python3"}
+  ]
+}
+
