@@ -1,7 +1,7 @@
 # Paper Notes — Aggarwal2024_AutoMix
 
 > File: `Aggarwal2024_AutoMix.md`
-> Priority: **Critical** (closest conceptual predecessor to TriRoute)
+> Priority: **Critical** (closest conceptual predecessor to TRACER)
 
 ---
 
@@ -31,7 +31,7 @@
 
 *Read the abstract and introduction only. What do you expect this paper to be about?*
 
-This is our closest predecessor and the central comparison point for TriRoute, so I expect to spend the most time on this one. From the abstract, AutoMix lets a small model answer first, then uses a few-shot self-verification step to estimate whether that answer is likely correct, and feeds that estimate into a POMDP-based router that decides whether to escalate to a larger model. I expect the paper to describe: how self-verification is prompted (framed as an entailment problem), how the POMDP handles noisy verification signals, and how much it saves in compute while matching or beating baselines. Key thing I need to nail down while reading: exactly where the accept/escalate boundary sits, since TriRoute's whole contribution is splitting "escalate" into repair vs. regenerate.
+This is our closest predecessor and the central comparison point for TRACER, so I expect to spend the most time on this one. From the abstract, AutoMix lets a small model answer first, then uses a few-shot self-verification step to estimate whether that answer is likely correct, and feeds that estimate into a POMDP-based router that decides whether to escalate to a larger model. I expect the paper to describe: how self-verification is prompted (framed as an entailment problem), how the POMDP handles noisy verification signals, and how much it saves in compute while matching or beating baselines. Key thing I need to nail down while reading: exactly where the accept/escalate boundary sits, since TRACER's whole contribution is splitting "escalate" into repair vs. regenerate.
 
 ---
 
@@ -48,10 +48,10 @@ Two main components:
 1. **Few-shot self-verification** — the smaller model (or the same model) is prompted to judge whether its own answer is likely correct, framed as an entailment-style check rather than a raw confidence score.
 2. **POMDP-based router** — since self-verification is noisy, the router treats correctness as a partially observable state and uses a POMDP formulation to decide whether to accept the small model's answer or escalate to the larger model, needing only ~50 samples to train.
 
-No architectural changes are required and the method assumes only black-box API access to both models — worth comparing against TriRoute's assumption that we also see validator evidence (test failures, etc.), not just the response itself.
+No architectural changes are required and the method assumes only black-box API access to both models — worth comparing against TRACER's assumption that we also see validator evidence (test failures, etc.), not just the response itself.
 
 ### Key Innovation
-An ideal router should (a) judge query difficulty from the small model's own confidence, (b) route hard queries up and easy queries down, and — importantly — (c) avoid escalating queries that neither model can solve, since that wastes cost for no benefit. This third point (recognizing "unsolvable" queries) is worth comparing against TriRoute's "unresolved/abstain" case.
+An ideal router should (a) judge query difficulty from the small model's own confidence, (b) route hard queries up and easy queries down, and — importantly — (c) avoid escalating queries that neither model can solve, since that wastes cost for no benefit. This third point (recognizing "unsolvable" queries) is worth comparing against TRACER's "unresolved/abstain" case.
 
 ### Experimental Setup
 *(fill in after reading — the paper reports evaluation across five language models and five datasets; need exact datasets, model pairs, and cost metric definitions from the full text)*
@@ -63,11 +63,11 @@ An ideal router should (a) judge query difficulty from the small model's own con
 *(fill in after reading)*
 
 ### My Critical Assessment
-Per our tracker: AutoMix is the primary predecessor and central comparison for TriRoute. The main gap I need to articulate clearly in the report is that AutoMix's action space is binary (accept small-model output vs. escalate to large model), while TriRoute splits escalation into two distinct actions — repair (edit using the SLM's response as a starting point) vs. regenerate (solve independently) — each with its own calibrated risk estimate. AutoMix's self-verification signal is also purely intrinsic (the model judging itself), whereas TriRoute additionally uses external validator evidence (e.g. failed test output) as an input to the risk estimator, which should make our risk signal harder to game and less coupled to the SLM's own blind spots.
+Per our tracker: AutoMix is the primary predecessor and central comparison for TRACER. The main gap I need to articulate clearly in the report is that AutoMix's action space is binary (accept small-model output vs. escalate to large model), while TRACER splits escalation into two distinct actions — repair (edit using the SLM's response as a starting point) vs. regenerate (solve independently) — each with its own calibrated risk estimate. AutoMix's self-verification signal is also purely intrinsic (the model judging itself), whereas TRACER additionally uses external validator evidence (e.g. failed test output) as an input to the risk estimator, which should make our risk signal harder to game and less coupled to the SLM's own blind spots.
 
-### Relevance to My/Our TriRoute Work
-1. **Core baseline:** this is the single most important comparison in our proposal — cite this paper first when framing what TriRoute extends.
-2. **POMDP router:** worth understanding well enough to explain why TriRoute uses a supervised, calibrated multi-head risk estimator instead of a POMDP — is it a design choice, or does it solve a different problem?
+### Relevance to My/Our TRACER Work
+1. **Core baseline:** this is the single most important comparison in our proposal — cite this paper first when framing what TRACER extends.
+2. **POMDP router:** worth understanding well enough to explain why TRACER uses a supervised, calibrated multi-head risk estimator instead of a POMDP — is it a design choice, or does it solve a different problem?
 3. **Cost-quality tradeoff framing:** useful language and metrics for how we report our own cost/latency numbers later in the project.
 4. **Report/related work section:** this is likely the paper we spend the most words distinguishing ourselves from.
 

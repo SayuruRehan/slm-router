@@ -29,7 +29,7 @@
 
 *Read the abstract and introduction only. What do you expect this paper to be about?*
 
-CRITIC is about giving LLMs external tools (like a search engine for facts or a code interpreter for debugging) so they can check and revise their own output, rather than revising purely from internal self-reflection. I expect this to be the most directly useful paper for designing TriRoute's REPAIR action's validator step — the framing of "starting with an initial output, interact with tools to evaluate it, then revise based on that feedback" maps almost exactly onto what our proposal describes for REPAIR (original task + SLM response + validator evidence → corrected response).
+CRITIC is about giving LLMs external tools (like a search engine for facts or a code interpreter for debugging) so they can check and revise their own output, rather than revising purely from internal self-reflection. I expect this to be the most directly useful paper for designing TRACER's REPAIR action's validator step — the framing of "starting with an initial output, interact with tools to evaluate it, then revise based on that feedback" maps almost exactly onto what our proposal describes for REPAIR (original task + SLM response + validator evidence → corrected response).
 
 ---
 
@@ -57,16 +57,16 @@ Grounding self-correction in *external, verifiable* tool feedback instead of the
 *(fill in after reading)*
 
 ### My Critical Assessment
-Per our tracker: CRITIC supports the case for validator-assisted correction, but TriRoute's contribution goes a step further — deciding *whether* correction is even worth attempting (via a calibrated risk estimate) before spending the cost of a repair call, rather than always running the critique-and-revise loop. Worth checking while reading whether CRITIC allows multiple revision rounds — our proposal explicitly restricts REPAIR to a single attempt (Section 3.2), specifically to stay distinct from iterative self-repair research, so I should note clearly if CRITIC's design is iterative and by how much that differs from ours.
+Per our tracker: CRITIC supports the case for validator-assisted correction, but TRACER's contribution goes a step further — deciding *whether* correction is even worth attempting (via a calibrated risk estimate) before spending the cost of a repair call, rather than always running the critique-and-revise loop. Worth checking while reading whether CRITIC allows multiple revision rounds — our proposal explicitly restricts REPAIR to a single attempt (Section 3.2), specifically to stay distinct from iterative self-repair research, so I should note clearly if CRITIC's design is iterative and by how much that differs from ours.
 
-### Relevance to My/Our TriRoute Work
+### Relevance to My/Our TRACER Work
 1. **REPAIR design reference:** the closest existing template for how to structure our own validator-plus-revision prompt.
 2. **Supports validator-over-confidence framing:** strengthens the argument that external evidence beats self-assessment for correction.
-3. **Contrast point:** helps us clearly state that TriRoute adds an economic decision layer (should we even repair?) on top of what CRITIC-style methods do (how do we repair?).
+3. **Contrast point:** helps us clearly state that TRACER adds an economic decision layer (should we even repair?) on top of what CRITIC-style methods do (how do we repair?).
 
 ### Follow-up Papers to Read
 - Small Language Models Need Strong Verifiers — read together with this one, since both are about the role of verification/tool feedback in correction quality.
-- "Is Self-Repair a Silver Bullet for Code Generation?" (cited in our proposal [16]) — studies when repair gains are/aren't worth the cost, which is exactly the decision layer TriRoute adds on top of CRITIC-style tool-assisted repair.
+- "Is Self-Repair a Silver Bullet for Code Generation?" (cited in our proposal [16]) — studies when repair gains are/aren't worth the cost, which is exactly the decision layer TRACER adds on top of CRITIC-style tool-assisted repair.
 
 ---
 

@@ -31,7 +31,7 @@
 
 *Read the abstract and introduction only. What do you expect this paper to be about?*
 
-This is a dataset paper rather than a methods paper, and it's a strong candidate for TriRoute's code-debugging experiments since it gives us objective, execution-checkable correctness — exactly what our proposal requires (no reliance on LLM-as-judge). From the abstract: 4,253 buggy code instances across C++, Java, and Python, built by taking real LeetCode submissions and implanting bugs using GPT-4, covering 4 major and 18 minor bug categories. I expect to focus on: how bugs are categorized (this maps to how we might stratify our own risk analysis by bug type), what "zero-shot" evaluation looked like for their baseline models, and whether runtime/test feedback was part of their setup — since that's the validator evidence TriRoute's REPAIR action needs.
+This is a dataset paper rather than a methods paper, and it's a strong candidate for TRACER's code-debugging experiments since it gives us objective, execution-checkable correctness — exactly what our proposal requires (no reliance on LLM-as-judge). From the abstract: 4,253 buggy code instances across C++, Java, and Python, built by taking real LeetCode submissions and implanting bugs using GPT-4, covering 4 major and 18 minor bug categories. I expect to focus on: how bugs are categorized (this maps to how we might stratify our own risk analysis by bug type), what "zero-shot" evaluation looked like for their baseline models, and whether runtime/test feedback was part of their setup — since that's the validator evidence TRACER's REPAIR action needs.
 
 ---
 
@@ -50,18 +50,18 @@ Real code snippets are collected from the LeetCode community (i.e., grounded in 
 Scale (4,253 instances) and structured bug categorization across three widely-used languages, evaluated with both a "repair" task (fix the code) and a "bug identification" task, plus an explicit comparison between LLM debugging ability and LLM code-generation ability.
 
 ### Experimental Setup
-Two commercial and four open-source models evaluated zero-shot (per abstract). Need model names, exact split sizes per language/bug-category, and how "runtime feedback" was operationalized in their experiments — this last point matters a lot for us since it's the closest thing to TriRoute's validator evidence.
+Two commercial and four open-source models evaluated zero-shot (per abstract). Need model names, exact split sizes per language/bug-category, and how "runtime feedback" was operationalized in their experiments — this last point matters a lot for us since it's the closest thing to TRACER's validator evidence.
 
 ### Results — TBD after reading
-Per abstract: (1) closed-source models beat humans less consistently than expected and open-source models score lower pass rates overall; (2) debugging difficulty varies a lot by bug category; (3) adding runtime feedback helps but not uniformly — sometimes doesn't help. Need the actual pass-rate numbers and which bug categories were hardest, since that's directly useful for picking which TriRoute experiments to prioritize.
+Per abstract: (1) closed-source models beat humans less consistently than expected and open-source models score lower pass rates overall; (2) debugging difficulty varies a lot by bug category; (3) adding runtime feedback helps but not uniformly — sometimes doesn't help. Need the actual pass-rate numbers and which bug categories were hardest, since that's directly useful for picking which TRACER experiments to prioritize.
 
 ### Limitations Acknowledged by Authors
 *(fill in after reading)*
 
 ### My Critical Assessment
-Per our tracker: this is our primary candidate code dataset for measuring accept/repair/regenerate decisions on code failures. The finding that runtime feedback "is not always helpful" is worth digging into carefully — if adding validator evidence sometimes *hurts* debugging performance in their setup, we need to understand why, since TriRoute's REPAIR action is built around using validator evidence as an input. It may be about how the feedback was presented rather than feedback being useless in principle.
+Per our tracker: this is our primary candidate code dataset for measuring accept/repair/regenerate decisions on code failures. The finding that runtime feedback "is not always helpful" is worth digging into carefully — if adding validator evidence sometimes *hurts* debugging performance in their setup, we need to understand why, since TRACER's REPAIR action is built around using validator evidence as an input. It may be about how the feedback was presented rather than feedback being useless in principle.
 
-### Relevance to My/Our TriRoute Work
+### Relevance to My/Our TRACER Work
 1. **Primary code dataset:** likely candidate for our objective, execution-checkable code-debugging experiments.
 2. **Bug category structure:** could let us report risk-estimator performance broken down by bug type, which is more informative than a single aggregate number.
 3. **Runtime feedback finding:** important cautionary result to address directly when designing our REPAIR validator-evidence pipeline.

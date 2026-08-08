@@ -30,7 +30,7 @@
 
 *Read the abstract and introduction only. What do you expect this paper to be about?*
 
-SATER is the most recent (Oct 2025) routing paper in our list and looks directly relevant to the efficiency side of TriRoute. From the abstract, it's a "dual-mode" method that improves both pre-generation routing and cascade routing at once, using shortest-response preference optimization plus a confidence-aware rejection mechanism, aimed specifically at cutting redundant tokens and cascade latency. I expect a strong emphasis on wall-clock/latency numbers rather than just cost-per-query, since that's the framing in the abstract (over 80% cascade latency reduction claimed).
+SATER is the most recent (Oct 2025) routing paper in our list and looks directly relevant to the efficiency side of TRACER. From the abstract, it's a "dual-mode" method that improves both pre-generation routing and cascade routing at once, using shortest-response preference optimization plus a confidence-aware rejection mechanism, aimed specifically at cutting redundant tokens and cascade latency. I expect a strong emphasis on wall-clock/latency numbers rather than just cost-per-query, since that's the framing in the abstract (over 80% cascade latency reduction claimed).
 
 ---
 
@@ -58,10 +58,10 @@ Per abstract: comparable performance to baselines while cutting computational co
 *(fill in after reading)*
 
 ### My Critical Assessment
-Per our tracker: this is our key comparison point for end-to-end latency and redundant SLM generation — something none of our other routing baselines focus on directly. Worth thinking about while reading: TriRoute's REPAIR action necessarily costs *more* than ACCEPT (it's an additional LLM call), so if SATER's token-efficiency techniques could reduce the cost of TriRoute's REPAIR/REGENERATE calls themselves, that's a nice complementary angle to mention in future work, even if it's out of scope for our three-month implementation.
+Per our tracker: this is our key comparison point for end-to-end latency and redundant SLM generation — something none of our other routing baselines focus on directly. Worth thinking about while reading: TRACER's REPAIR action necessarily costs *more* than ACCEPT (it's an additional LLM call), so if SATER's token-efficiency techniques could reduce the cost of TRACER's REPAIR/REGENERATE calls themselves, that's a nice complementary angle to mention in future work, even if it's out of scope for our three-month implementation.
 
-### Relevance to My/Our TriRoute Work
-1. **Latency baseline:** cite when discussing the cost of TriRoute's cascade-like structure (SLM response → possible REPAIR/REGENERATE call).
+### Relevance to My/Our TRACER Work
+1. **Latency baseline:** cite when discussing the cost of TRACER's cascade-like structure (SLM response → possible REPAIR/REGENERATE call).
 2. **Token efficiency:** relevant if we end up measuring or reporting token/latency costs alongside accuracy in our results section.
 3. **Most recent related work:** good to cite to show our literature review is current (Oct 2025 paper).
 

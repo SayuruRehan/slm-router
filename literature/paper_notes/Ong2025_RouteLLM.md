@@ -42,7 +42,7 @@ Choosing which LLM to use per query is a cost/quality tradeoff. RouteLLM frames 
 *(fill in after reading — worth checking how they position themselves against FrugalGPT and Hybrid LLM specifically)*
 
 ### Technical Approach
-A training framework for router models that uses human preference data plus data augmentation to improve router quality, so the router doesn't need large amounts of hand-labelled routing data. The router only ever sees the query — it never observes an actual model output before deciding, which is the key structural difference from AutoMix and from TriRoute.
+A training framework for router models that uses human preference data plus data augmentation to improve router quality, so the router doesn't need large amounts of hand-labelled routing data. The router only ever sees the query — it never observes an actual model output before deciding, which is the key structural difference from AutoMix and from TRACER.
 
 ### Key Innovation
 Learning routing decisions from preference data (rather than correctness labels) and demonstrating that the resulting router transfers reasonably well even when the underlying strong/weak model pair changes at test time — this transfer result is the part most worth digging into, since it speaks to how much a router "learns the task" vs. "learns the specific models."
@@ -57,12 +57,12 @@ Per the abstract: cost reductions "over 2 times in certain cases" without compro
 *(fill in after reading)*
 
 ### My Critical Assessment
-Per our tracker: RouteLLM is an important learned-routing baseline, but it routes *before* seeing the SLM response — it can't observe anything about the actual generated output, so it's fundamentally a different point in the pipeline from TriRoute (which reacts to a completed SLM response). Worth stating explicitly in the report: RouteLLM answers "which model should generate this?" while TriRoute answers "given what the small model already generated, what should we do with it?" These aren't competing approaches so much as different pipeline stages, and could in principle be combined (route pre-generation with RouteLLM's approach, then apply TriRoute's action-risk estimator post-generation).
+Per our tracker: RouteLLM is an important learned-routing baseline, but it routes *before* seeing the SLM response — it can't observe anything about the actual generated output, so it's fundamentally a different point in the pipeline from TRACER (which reacts to a completed SLM response). Worth stating explicitly in the report: RouteLLM answers "which model should generate this?" while TRACER answers "given what the small model already generated, what should we do with it?" These aren't competing approaches so much as different pipeline stages, and could in principle be combined (route pre-generation with RouteLLM's approach, then apply TRACER's action-risk estimator post-generation).
 
-### Relevance to My/Our TriRoute Work
+### Relevance to My/Our TRACER Work
 1. **Modern routing baseline:** cite as the current standard for learned, preference-trained routers.
 2. **Preference-data framing:** worth considering whether any part of our own risk-estimator training could benefit from preference-style labels instead of pure correctness labels.
-3. **Transfer results:** relevant if we ever test whether TriRoute's risk estimator generalizes across different SLM/LLM pairs.
+3. **Transfer results:** relevant if we ever test whether TRACER's risk estimator generalizes across different SLM/LLM pairs.
 4. **Code availability:** they released code (lm-sys/RouteLLM) — could be useful as an implementation reference for router training infrastructure even though the routing point differs.
 
 ### Follow-up Papers to Read
