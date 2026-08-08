@@ -1,7 +1,7 @@
 # Paper Notes — Huang2024_CannotSelfCorrect
 
 > File: `Huang2024_CannotSelfCorrect.md`
-> Priority: **High** (motivation and risk analysis for TriRoute)
+> Priority: **High** (motivation and risk analysis for TRACER)
 
 ---
 
@@ -28,7 +28,7 @@
 
 *Read the abstract and introduction only. What do you expect this paper to be about?*
 
-This is the "risk" paper in our list — a critical look at self-correction that pushes back on the optimism in a lot of the self-refinement literature. The key term is "intrinsic self-correction": the model tries to fix its own answer using only its own capabilities, with no external feedback at all. From the abstract, their headline claim is that on reasoning tasks, LLMs largely fail to self-correct this way, and performance can even get *worse* after "correcting." I expect this to be our strongest citation for why TriRoute doesn't rely on unaided self-correction and instead routes through an external stronger model with either preserved structure (REPAIR) or a fresh attempt (REGENERATE).
+This is the "risk" paper in our list — a critical look at self-correction that pushes back on the optimism in a lot of the self-refinement literature. The key term is "intrinsic self-correction": the model tries to fix its own answer using only its own capabilities, with no external feedback at all. From the abstract, their headline claim is that on reasoning tasks, LLMs largely fail to self-correct this way, and performance can even get *worse* after "correcting." I expect this to be our strongest citation for why TRACER doesn't rely on unaided self-correction and instead routes through an external stronger model with either preserved structure (REPAIR) or a fresh attempt (REGENERATE).
 
 ---
 
@@ -56,10 +56,10 @@ Per the paper's own framing: in most instances, performance after self-correctio
 *(fill in after reading)*
 
 ### My Critical Assessment
-Per our tracker: this directly justifies TriRoute's use of independent (external) validators and a controlled correction policy, rather than trusting the SLM (or even the stronger model) to fix things purely through self-reflection. Worth being precise in our report about scope: this paper studies *intrinsic* self-correction specifically — it's not a claim that correction never works, just that it doesn't work reliably *without* external feedback. That's an important distinction to get right, since TriRoute's REPAIR action always includes external validator evidence, so this paper is evidence for why that design choice matters, not evidence against repair working at all.
+Per our tracker: this directly justifies TRACER's use of independent (external) validators and a controlled correction policy, rather than trusting the SLM (or even the stronger model) to fix things purely through self-reflection. Worth being precise in our report about scope: this paper studies *intrinsic* self-correction specifically — it's not a claim that correction never works, just that it doesn't work reliably *without* external feedback. That's an important distinction to get right, since TRACER's REPAIR action always includes external validator evidence, so this paper is evidence for why that design choice matters, not evidence against repair working at all.
 
-### Relevance to My/Our TriRoute Work
-1. **Core motivation citation** for why TriRoute avoids relying on unaided self-correction.
+### Relevance to My/Our TRACER Work
+1. **Core motivation citation** for why TRACER avoids relying on unaided self-correction.
 2. **Risk framing:** useful for the problem statement — self-correction can silently make things worse, which is exactly the kind of hidden risk a calibrated risk estimator is meant to catch before it happens.
 3. **Contrast with CRITIC/verifier papers:** this paper is the "without external feedback" baseline that CRITIC and the strong-verifier paper argue against — worth citing all three together to show the full picture.
 

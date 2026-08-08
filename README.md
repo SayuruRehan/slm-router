@@ -1,12 +1,12 @@
-# TriRoute
+# TRACER
 
-Risk-Controlled Action-Outcome Routing for Accepting, Repairing, or Regenerating Small Language Model Responses.
+Tri-Action Risk Assessment and Calibration for Execution Routing of Small Language Model Responses.
 
 Final risk-focused Master's research proposal — three-person research group, three-month implementation scope.
 
 ## Summary
 
-TriRoute learns a calibrated, action-specific risk estimator that decides whether to ACCEPT, REPAIR, or REGENERATE a Small Language Model's response, based on predicted residual failure risk rather than raw confidence. The primary experiments use code debugging and numerical reasoning tasks, since these allow responses to be labelled correct or incorrect without relying on an LLM-as-a-judge.
+TRACER learns a calibrated, action-specific risk estimator that decides whether to ACCEPT, REPAIR, or REGENERATE a Small Language Model's response, based on predicted residual failure risk rather than raw confidence. The primary experiments use code debugging and numerical reasoning tasks, since these allow responses to be labelled correct or incorrect without relying on an LLM-as-a-judge.
 
 ## Team
 

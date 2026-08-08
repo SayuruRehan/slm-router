@@ -32,7 +32,7 @@
 
 *Read the abstract and introduction only. What do you expect this paper to be about?*
 
-This is our primary candidate dataset for the numerical-reasoning half of TriRoute's experiments (alongside DebugBench on the code side). From the abstract, FinQA pairs financial-report text and tables with questions that require multi-step numerical reasoning, and — crucially for us — includes annotated "reasoning programs," meaning there's an executable/checkable ground truth for each answer, not just a final number. I expect the paper to describe: how questions were collected/annotated, what the reasoning-program format looks like, and how far models fall short of expert humans (their headline finding per the abstract).
+This is our primary candidate dataset for the numerical-reasoning half of TRACER's experiments (alongside DebugBench on the code side). From the abstract, FinQA pairs financial-report text and tables with questions that require multi-step numerical reasoning, and — crucially for us — includes annotated "reasoning programs," meaning there's an executable/checkable ground truth for each answer, not just a final number. I expect the paper to describe: how questions were collected/annotated, what the reasoning-program format looks like, and how far models fall short of expert humans (their headline finding per the abstract).
 
 ---
 
@@ -48,7 +48,7 @@ Financial reports are long and dense, making manual analysis hard, and there was
 Expert-annotated question-answer pairs are built from real financial reports (text and tables together), with each answer accompanied by an explicit multi-step reasoning program (the sequence of arithmetic/lookup operations needed to reach the answer) rather than just a final numeric value. This program-level annotation is what makes execution-based correctness checking possible.
 
 ### Key Innovation
-The reasoning-program annotations, which let correctness be checked by execution rather than exact-match string comparison or free-text judgment — directly relevant to TriRoute's requirement for objective, reproducible correctness checks without relying on an LLM-as-judge.
+The reasoning-program annotations, which let correctness be checked by execution rather than exact-match string comparison or free-text judgment — directly relevant to TRACER's requirement for objective, reproducible correctness checks without relying on an LLM-as-judge.
 
 ### Experimental Setup
 8,281 expert-annotated QA pairs total, following roughly a 75/10/15 train/dev/test split (6,251 / 883 / 1,147 — per a follow-up paper that reports these numbers; need to confirm against the original FinQA paper directly). Baselines are evaluated with "execution accuracy" as the primary metric.
@@ -60,9 +60,9 @@ Per abstract: even strong pretrained models fall well short of expert-human perf
 *(fill in after reading)*
 
 ### My Critical Assessment
-Per our tracker: this is our primary candidate dataset for the "numerical reasoning" arm of TriRoute's evaluation, parallel to DebugBench on the code side. Worth checking while reading: does the "reasoning program" format make it straightforward to build a validator that gives TriRoute's REPAIR action intermediate feedback (e.g., which step in the program went wrong), similar to failed-test output for code? If so, that's a nice methodological parallel between our two task domains worth calling out explicitly in the methods section.
+Per our tracker: this is our primary candidate dataset for the "numerical reasoning" arm of TRACER's evaluation, parallel to DebugBench on the code side. Worth checking while reading: does the "reasoning program" format make it straightforward to build a validator that gives TRACER's REPAIR action intermediate feedback (e.g., which step in the program went wrong), similar to failed-test output for code? If so, that's a nice methodological parallel between our two task domains worth calling out explicitly in the methods section.
 
-### Relevance to My/Our TriRoute Work
+### Relevance to My/Our TRACER Work
 1. **Primary reasoning dataset:** likely candidate for our objective numerical-reasoning experiments.
 2. **Execution accuracy metric:** gives us a precedent for defining "incorrect" cleanly under our proposal's operational definitions (Section 3.1).
 3. **Program-level ground truth:** potential source of structured validator evidence for the REPAIR action, not just a binary correct/incorrect signal.

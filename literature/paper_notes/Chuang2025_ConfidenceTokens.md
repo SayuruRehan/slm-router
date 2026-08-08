@@ -47,7 +47,7 @@ In high-stakes settings it matters whether an LLM's output can be trusted, so a 
 Self-Reflection with Error-based Feedback (Self-REF): a lightweight training strategy that teaches the model to emit dedicated confidence tokens, separate from its normal output, from which a confidence score can be extracted directly rather than inferred indirectly from token probabilities or a free-text confidence statement.
 
 ### Key Innovation
-Treating confidence as a learned, explicit signal (a token) rather than an emergent byproduct of generation — this reframes calibration as something you train for directly, which is closer to how TriRoute's risk estimator is designed (a trained, calibrated multi-head predictor) than to post-hoc confidence extraction methods.
+Treating confidence as a learned, explicit signal (a token) rather than an emergent byproduct of generation — this reframes calibration as something you train for directly, which is closer to how TRACER's risk estimator is designed (a trained, calibrated multi-head predictor) than to post-hoc confidence extraction methods.
 
 ### Experimental Setup
 Evaluated on four datasets and two base LLMs (per abstract), on routing and rejection-learning tasks specifically. Need exact dataset names and model names from the full text.
@@ -59,9 +59,9 @@ Per abstract: confidence tokens show significant improvements over both verbaliz
 *(fill in after reading)*
 
 ### My Critical Assessment
-Per our tracker: this motivates using learned confidence features rather than raw token-probability thresholds — directly supports our proposal's Section 4 argument that "token probabilities, verbalised confidence, and other uncertainty measures may be unstable or miscalibrated." Worth checking while reading whether Self-REF's confidence tokens are trained per-action or just for a single accept/reject decision — if it's the latter, that's a clear structural difference from TriRoute's action-specific (ACCEPT/REPAIR/REGENERATE) risk heads, worth naming explicitly.
+Per our tracker: this motivates using learned confidence features rather than raw token-probability thresholds — directly supports our proposal's Section 4 argument that "token probabilities, verbalised confidence, and other uncertainty measures may be unstable or miscalibrated." Worth checking while reading whether Self-REF's confidence tokens are trained per-action or just for a single accept/reject decision — if it's the latter, that's a clear structural difference from TRACER's action-specific (ACCEPT/REPAIR/REGENERATE) risk heads, worth naming explicitly.
 
-### Relevance to My/Our TriRoute Work
+### Relevance to My/Our TRACER Work
 1. **Confidence-signal baseline:** cite as an alternative learned-confidence approach to compare our calibrated risk estimator against.
 2. **Motivates learned features over raw probabilities:** strengthens our problem-statement argument about confidence instability.
 3. **Rejection-learning framing:** worth checking whether their "reject" option maps onto our "abstain/unresolved" case, since that's a similar idea from a different angle.
