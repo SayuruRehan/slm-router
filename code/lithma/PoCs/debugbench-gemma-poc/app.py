@@ -13,7 +13,8 @@ from pathlib import Path
 import pandas as pd
 import streamlit as st
 
-RESULTS_PATH = Path(__file__).parent / "results.json"
+REPO_ROOT = Path(__file__).resolve().parents[4]
+RESULTS_PATH = REPO_ROOT / "results" / "baselines" / "gemma3_records.json"
 
 st.set_page_config(page_title="DebugBench + gemma3:4b PoC viewer", layout="wide")
 
@@ -34,17 +35,17 @@ df = pd.DataFrame(results)
 
 with st.expander("How grading works"):
     st.markdown(
-        "An outcome is **correct** if the extracted code's AST matches the "
-        "reference solution's AST, **no_change** if it instead matches the "
-        "buggy input's AST, **syntax_error** if the extracted code fails to "
-        "parse, and **incorrect** otherwise."
+        "An outcome is **reference_match** when the extracted code's AST matches the "
+        "reference, **no_change** when it matches the buggy input, **syntax_error** "
+        "when it does not parse, and **needs_manual_review** when it is a different "
+        "parsing solution that cannot be verified because DebugBench has no tests here."
     )
 
 st.subheader("Summary")
 outcome_counts = df["outcome"].value_counts()
 cols = st.columns(1 + len(outcome_counts))
 cols[0].metric("Total problems", len(df))
-for col, (outcome, count) in zip(cols[1:], outcome_counts.items()):
+for col, (outcome, count) in zip(cols[1:], outcome_counts.items(), strict=False):
     col.metric(outcome, count)
 
 st.subheader("Problems")

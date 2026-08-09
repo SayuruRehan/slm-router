@@ -6,17 +6,20 @@ import sys
 import streamlit as st
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-RESULTS_PATH = os.path.join(HERE, "results.json")
+REPO_ROOT = os.path.dirname(os.path.dirname(HERE))
+RESULTS_PATH = os.path.join(
+    REPO_ROOT, "results", "baselines", "qwen25_coder_records.json"
+)
 RUN_PATH = os.path.join(HERE, "run.py")
 
 st.set_page_config(page_title="DebugBench SLM smoke test", layout="wide")
 
 st.title("DebugBench SLM smoke test")
-st.caption("qwen2.5-coder:1.5b on the first 10 Python rows of Rtian/DebugBench. "
+st.caption("qwen2.5-coder:1.5b on the fixed 20-row TRACER DebugBench manifest. "
            "Select a row to compare the code.")
 
-if st.button("Re-run the 10 problems", type="primary"):
-    with st.spinner("Calling Ollama on 10 problems, one at a time..."):
+if st.button("Re-run the 20 problems", type="primary"):
+    with st.spinner("Calling Ollama on 20 problems, one at a time..."):
         proc = subprocess.run([sys.executable, RUN_PATH], capture_output=True, text=True)
     if proc.returncode == 0:
         st.success("Run finished. Results below are freshly generated.")
@@ -37,21 +40,23 @@ st.caption(f"Showing results from: {RESULTS_PATH}")
 
 with st.expander("What do these columns mean?"):
     st.markdown("""
-**Outcome** — the single verdict per problem, in priority order:
+**Outcome** — the validation result per problem:
 
 | Label | Meaning |
 | --- | --- |
-| `correct` | Model output parses and is structurally identical (AST) to the reference solution. |
-| `incorrect` | Model output parses, differs from the buggy input, but does not match the reference. |
+| `reference_match` | Output AST matches the reference; useful evidence but not execution-tested. |
+| `needs_manual_review` | Output changed the bug, but there are no tests to prove correctness. |
 | `syntax_error` | Model output is not valid Python at all — it never got to be right or wrong. |
-| `no_change` | Model handed back the buggy code unchanged. A distinct failure mode from a wrong fix. |
+| `no_change` | Model handed back the buggy code unchanged. |
 
 **Fixed? (AST)** — Check A. The correctness signal: model output vs. reference solution, compared as
 normalised syntax trees, so whitespace/comments/formatting are ignored.
 
-**Unchanged? (AST)** — Check B. Model output vs. the *buggy input*. True means the model changed nothing.
+**Unchanged? (AST)** — Check B. Model output vs. the *buggy input*.
+True means the model changed nothing.
 
-**Cosine (diagnostic)** — Check C. Character-trigram similarity to the reference. **Not a correctness
+**Cosine (diagnostic)** — Check C. Character-trigram similarity to the reference.
+**Not a correctness
 signal.** Buggy and fixed code are near-identical on this dataset, so this sits ~0.97 for everything
 and discriminates nothing — it is logged to demonstrate that, not to grade with it.
 
@@ -62,11 +67,15 @@ model fixes the bug correctly but differently from the reference, so at n=10 the
 counts = {}
 for r in results:
     counts[r["outcome"]] = counts.get(r["outcome"], 0) + 1
-incorrect_rate = sum(1 for r in results if r["outcome"] != "correct") / len(results)
+review_rate = sum(1 for r in results if r["needs_manual_review"]) / len(results)
 
 cols = st.columns(5)
-cols[0].metric("Not correct", f"{incorrect_rate:.0%}")
-for col, outcome in zip(cols[1:], ["correct", "incorrect", "syntax_error", "no_change"]):
+cols[0].metric("Needs review", f"{review_rate:.0%}")
+for col, outcome in zip(
+    cols[1:],
+    ["reference_match", "needs_manual_review", "syntax_error", "no_change"],
+    strict=True,
+):
     col.metric(outcome, counts.get(outcome, 0))
 
 table = [
@@ -94,7 +103,9 @@ event = st.dataframe(
         "#": st.column_config.NumberColumn(width="small", help="Row index in this run."),
         "Problem": st.column_config.TextColumn(width="medium", help="DebugBench problem slug."),
         "Bug category": st.column_config.TextColumn(
-            width="small", help="Bug class from the dataset, e.g. syntax / logic / reference error."),
+            width="small",
+            help="Bug class from the dataset, e.g. syntax / logic / reference error.",
+        ),
         "Bug subtype": st.column_config.TextColumn(
             width="small", help="Specific bug injected, e.g. illegal indentation."),
         "Outcome": st.column_config.TextColumn(
