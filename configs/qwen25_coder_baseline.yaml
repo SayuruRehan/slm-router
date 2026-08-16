@@ -1,0 +1,33 @@
+experiment:
+  name: qwen25-coder-debugbench-baseline
+  version: "1.0"
+
+dataset:
+  path: benchmarking/data/debugbench_full.json
+  manifest: sample_manifests/debugbench_python_first_20.json
+
+model:
+  name: qwen2.5-coder:1.5b
+  base_url: http://localhost:11434
+  timeout_seconds: 300
+  options:
+    temperature: 0
+    seed: 42
+    num_predict: 512
+
+prompt:
+  version: debugbench-code-repair-v1
+
+validator:
+  backend: docker
+  docker_image: python:3.11-slim
+  timeout_seconds: 10
+  memory_mb: 256
+  cpu_limit: 0.5
+  pids_limit: 64
+
+output:
+  json_path: results/baselines/qwen25_coder_records.json
+  csv_path: results/baselines/qwen25_coder_records.csv
+  summary_path: results/baselines/qwen25_coder_summary.json
+
