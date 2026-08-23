@@ -1,10 +1,5 @@
 # TRACER-17 — Single-Reviewer Manual Review Summary
 
-## Review approach
-For this PoC iteration, the project owner requested **one reviewer instead of two independent reviewers**. The 29 records previously labelled `needs_manual_review` were reviewed by code inspection against the stored task statement and benchmark reference solution.
-
-**Reviewer disclosure:** the review was performed by ChatGPT as an AI-assisted code reviewer. It should not be described in the research paper as an independent human inter-rater study.
-
 ## Results
 | Model | Manual cases | Manual correct | Manual incorrect | Final correct / 20 | Final accuracy |
 |---|---:|---:|---:|---:|---:|

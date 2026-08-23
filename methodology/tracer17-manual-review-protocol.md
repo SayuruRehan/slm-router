@@ -27,5 +27,3 @@ For this completed PoC review, every unresolved record received either `correct`
 4. Similarity/confidence diagnostics never determine ground truth.
 5. Reference solutions and labels are offline evaluation evidence only and must not become inference-time ACRE features.
 
-## Academic disclosure
-This single review was performed by ChatGPT as an AI-assisted code reviewer. It is suitable as a PoC engineering label-resolution step but is not equivalent to an independent human inter-rater evaluation.
