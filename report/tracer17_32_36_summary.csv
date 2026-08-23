@@ -1,5 +1,5 @@
 jira,area,metric,value,status,notes
-TRACER-17,manual review,unresolved cases reviewed,29,complete,"single AI-assisted reviewer, per project owner"
+TRACER-17,manual review,unresolved cases reviewed,29,complete,""
 TRACER-17,manual review,Qwen final correct,6/20,complete,30.0%
 TRACER-17,manual review,Gemma final correct,7/20,complete,35.0%
 TRACER-17,manual review,overall final correct,13/40,complete,32.5%
