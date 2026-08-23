@@ -92,6 +92,13 @@ class ExperimentRecord:
     parses: bool
     execution_status: str
     execution_passed: bool | None
+    # TRACER-31: retain execution evidence when sandboxed tests are available.
+    execution_exit_code: int | None = None
+    execution_duration_sec: float | None = None
+    execution_stdout: str = ""
+    execution_stderr: str = ""
+    # TRACER-29: default keeps programmatic construction backward-compatible.
+    validator_config: dict[str, Any] = field(default_factory=dict)
     manual_verdict: bool | None = None
 
     def to_dict(self) -> dict[str, Any]:

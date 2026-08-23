@@ -1,11 +1,4 @@
-"""
-Streamlit viewer for the DebugBench + gemma3:4b PoC results (results.json).
-
-Standalone: does not import, copy, or reference code/sula/app.py.
-Read-only viewer — run run_poc.py first to generate results.json.
-
-Author: Lithma
-"""
+"""Streamlit viewer for the canonical DebugBench + gemma3:4b baseline."""
 
 import json
 from pathlib import Path
@@ -13,25 +6,61 @@ from pathlib import Path
 import pandas as pd
 import streamlit as st
 
+from tracer.experiments.viewer_runner import (
+    BaselineCliUnavailableError,
+    run_canonical_baseline,
+)
+
 REPO_ROOT = Path(__file__).resolve().parents[4]
+CONFIG_PATH = REPO_ROOT / "configs" / "gemma3_baseline.yaml"
 RESULTS_PATH = REPO_ROOT / "results" / "baselines" / "gemma3_records.json"
 
 st.set_page_config(page_title="DebugBench + gemma3:4b PoC viewer", layout="wide")
 
 st.title("DebugBench + gemma3:4b PoC viewer")
-st.caption(
-    "gemma3:4b fixing 20 Python DebugBench problems, graded by AST comparison."
-)
+st.caption("gemma3:4b on the fixed 20-row TRACER DebugBench manifest.")
+
+if st.button("Re-run the 20 problems", type="primary"):
+    # TRACER-30: Gemma uses the canonical shared runner and verifies its expected output.
+    try:
+        with st.spinner("Running the canonical Gemma baseline on 20 problems..."):
+            outcome = run_canonical_baseline(CONFIG_PATH, RESULTS_PATH, REPO_ROOT)
+    except BaselineCliUnavailableError as exc:
+        st.error(str(exc))
+    else:
+        if outcome.success:
+            st.success("Run finished and gemma3_records.json was refreshed.")
+            with st.expander("Run log (stdout)"):
+                st.code(outcome.stdout[-20_000:], language="text", wrap_lines=True, height=300)
+        elif outcome.returncode == 0:
+            st.error(
+                "The runner exited successfully, but gemma3_records.json was not created or "
+                "refreshed. The run is not being reported as successful."
+            )
+            st.code(outcome.stdout[-5000:], language="text", wrap_lines=True)
+        else:
+            st.error(f"Run failed (exit {outcome.returncode}). Is Ollama running?")
+            st.code(outcome.stderr[-5000:], language="text", wrap_lines=True)
 
 if not RESULTS_PATH.exists():
     st.error(
-        f"No results found at `{RESULTS_PATH.name}`. "
-        "Run `run_poc.py` first to generate results, then reload this page."
+        "No standardized Gemma results found. Run `tracer-baseline --config "
+        "configs/gemma3_baseline.yaml` from the repository root, or use the button above."
     )
     st.stop()
 
-results = json.loads(RESULTS_PATH.read_text())
+results = json.loads(RESULTS_PATH.read_text(encoding="utf-8"))
 df = pd.DataFrame(results)
+
+validator_metadata = results[0].get("validator_config") if results else None
+with st.expander("Validator configuration used for this result"):
+    if validator_metadata:
+        st.json(validator_metadata)
+    else:
+        st.info(
+            "Legacy result file: validator metadata is not present. Re-run with the canonical "
+            "baseline runner to create TRACER-29 provenance fields."
+        )
 
 with st.expander("How grading works"):
     st.markdown(
