@@ -41,6 +41,47 @@ class ValidatorConfig:
     cpu_limit: float = 0.5
     pids_limit: int = 64
 
+    def to_metadata(self) -> dict[str, Any]:
+        """Return the effective validator settings that produced an experiment label."""
+
+        # TRACER-29: persist the effective validator provenance with every result.
+        if self.backend == "disabled":
+            return {
+                "backend": "disabled",
+                "execution_enabled": False,
+                "docker_image": None,
+                "timeout_seconds": None,
+                "memory_mb": None,
+                "cpu_limit": None,
+                "pids_limit": None,
+                "network_mode": None,
+                "read_only_root": None,
+                "workspace_read_only": None,
+                "cap_drop": None,
+                "no_new_privileges": None,
+                "tmpfs": None,
+                "python_isolated_mode": None,
+                "python_no_bytecode": None,
+            }
+
+        return {
+            "backend": "docker",
+            "execution_enabled": True,
+            "docker_image": self.docker_image,
+            "timeout_seconds": self.timeout_seconds,
+            "memory_mb": self.memory_mb,
+            "cpu_limit": self.cpu_limit,
+            "pids_limit": self.pids_limit,
+            "network_mode": "none",
+            "read_only_root": True,
+            "workspace_read_only": True,
+            "cap_drop": ["ALL"],
+            "no_new_privileges": True,
+            "tmpfs": "/tmp:rw,noexec,nosuid,size=64m",
+            "python_isolated_mode": True,
+            "python_no_bytecode": True,
+        }
+
 
 @dataclass(frozen=True)
 class OutputConfig:

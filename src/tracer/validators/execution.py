@@ -61,6 +61,41 @@ class DockerPythonSandbox:
             "test_runner.py",
         ]
 
+    @staticmethod
+    def build_runner_source(
+        test_code: str,
+        candidate_path: str = "/workspace/candidate.py",
+    ) -> str:
+        """Create a runner that imports the candidate without relying on ``sys.path``."""
+
+        # TRACER-28: Python ``-I`` removes the script directory from the import path.
+        # Load candidate.py from the explicit read-only workspace path instead of
+        # weakening isolated mode or adding arbitrary directories to PYTHONPATH.
+        return (
+            "import importlib.util\n"
+            "import sys\n\n"
+            f"_candidate_path = {candidate_path!r}\n"
+            "_candidate_spec = importlib.util.spec_from_file_location(\n"
+            "    'candidate', _candidate_path\n"
+            ")\n"
+            "if _candidate_spec is None or _candidate_spec.loader is None:\n"
+            "    raise ImportError(\n"
+            "        f'Unable to load candidate module from {_candidate_path}'\n"
+            "    )\n"
+            "_candidate = importlib.util.module_from_spec(_candidate_spec)\n"
+            "sys.modules['candidate'] = _candidate\n"
+            "_candidate_spec.loader.exec_module(_candidate)\n"
+            "_candidate_exports = getattr(_candidate, '__all__', None)\n"
+            "if _candidate_exports is None:\n"
+            "    _candidate_exports = [\n"
+            "        name for name in vars(_candidate) if not name.startswith('_')\n"
+            "    ]\n"
+            "globals().update(\n"
+            "    {name: getattr(_candidate, name) for name in _candidate_exports}\n"
+            ")\n\n"
+            f"{test_code}\n"
+        )
+
     def run(self, candidate_code: str, test_code: str) -> ExecutionResult:
         if not self.available():
             raise SandboxUnavailableError(
@@ -70,9 +105,22 @@ class DockerPythonSandbox:
 
         with tempfile.TemporaryDirectory(prefix="tracer-validation-") as temp_directory:
             workspace = Path(temp_directory)
-            (workspace / "candidate.py").write_text(candidate_code, encoding="utf-8")
-            runner = "from candidate import *  # noqa: F403\n\n" + test_code + "\n"
-            (workspace / "test_runner.py").write_text(runner, encoding="utf-8")
+
+            # TRACER-28: Linux CI bind mounts must allow the container to
+            # traverse the temporary directory. The mount itself remains read-only.
+            workspace.chmod(0o755)
+
+            candidate_file = workspace / "candidate.py"
+            runner_file = workspace / "test_runner.py"
+
+            candidate_file.write_text(candidate_code, encoding="utf-8")
+            runner = self.build_runner_source(test_code)
+            runner_file.write_text(runner, encoding="utf-8")
+
+            # TRACER-28: generated validation inputs are readable by the isolated
+            # container but cannot be modified through the read-only Docker mount.
+            candidate_file.chmod(0o444)
+            runner_file.chmod(0o444)
             started = time.monotonic()
             try:
                 completed = subprocess.run(
@@ -101,4 +149,3 @@ class DockerPythonSandbox:
                 stdout=completed.stdout[-10_000:],
                 stderr=completed.stderr[-10_000:],
             )
-
