@@ -105,9 +105,22 @@ class DockerPythonSandbox:
 
         with tempfile.TemporaryDirectory(prefix="tracer-validation-") as temp_directory:
             workspace = Path(temp_directory)
-            (workspace / "candidate.py").write_text(candidate_code, encoding="utf-8")
+
+            # TRACER-28: Linux CI bind mounts must allow the container to
+            # traverse the temporary directory. The mount itself remains read-only.
+            workspace.chmod(0o755)
+
+            candidate_file = workspace / "candidate.py"
+            runner_file = workspace / "test_runner.py"
+
+            candidate_file.write_text(candidate_code, encoding="utf-8")
             runner = self.build_runner_source(test_code)
-            (workspace / "test_runner.py").write_text(runner, encoding="utf-8")
+            runner_file.write_text(runner, encoding="utf-8")
+
+            # TRACER-28: generated validation inputs are readable by the isolated
+            # container but cannot be modified through the read-only Docker mount.
+            candidate_file.chmod(0o444)
+            runner_file.chmod(0o444)
             started = time.monotonic()
             try:
                 completed = subprocess.run(
