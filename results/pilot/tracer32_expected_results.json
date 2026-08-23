@@ -1,0 +1,202 @@
+[
+  {
+    "jira": "TRACER-32",
+    "slug": "nim-game",
+    "dataset_index": 2841,
+    "candidate_type": "buggy",
+    "expected_status": "fail",
+    "expected_failure_category": "syntax_error",
+    "review_basis": "manual fixture/code inspection",
+    "note": "Original buggy code has invalid indentation."
+  },
+  {
+    "jira": "TRACER-32",
+    "slug": "nim-game",
+    "dataset_index": 2841,
+    "candidate_type": "reference",
+    "expected_status": "pass",
+    "expected_failure_category": "expected_correct",
+    "review_basis": "manual fixture/code inspection",
+    "note": "Reference implements n % 4 != 0."
+  },
+  {
+    "jira": "TRACER-32",
+    "slug": "nim-game",
+    "dataset_index": 2841,
+    "candidate_type": "qwen",
+    "expected_status": "fail",
+    "expected_failure_category": "assertion_failure",
+    "review_basis": "manual fixture/code inspection",
+    "note": "Candidate returns the inverted Nim condition."
+  },
+  {
+    "jira": "TRACER-32",
+    "slug": "nim-game",
+    "dataset_index": 2841,
+    "candidate_type": "gemma",
+    "expected_status": "pass",
+    "expected_failure_category": "expected_correct",
+    "review_basis": "manual fixture/code inspection",
+    "note": "Gemma matches the correct condition."
+  },
+  {
+    "jira": "TRACER-32",
+    "slug": "sequential-digits",
+    "dataset_index": 2843,
+    "candidate_type": "buggy",
+    "expected_status": "fail",
+    "expected_failure_category": "syntax_error",
+    "review_basis": "manual fixture/code inspection",
+    "note": "Original buggy code has invalid method indentation."
+  },
+  {
+    "jira": "TRACER-32",
+    "slug": "sequential-digits",
+    "dataset_index": 2843,
+    "candidate_type": "reference",
+    "expected_status": "pass",
+    "expected_failure_category": "expected_correct",
+    "review_basis": "manual fixture/code inspection",
+    "note": "Reference BFS is correct."
+  },
+  {
+    "jira": "TRACER-32",
+    "slug": "sequential-digits",
+    "dataset_index": 2843,
+    "candidate_type": "qwen",
+    "expected_status": "pass",
+    "expected_failure_category": "expected_correct",
+    "review_basis": "manual fixture/code inspection",
+    "note": "Equivalent BFS plus sorted output."
+  },
+  {
+    "jira": "TRACER-32",
+    "slug": "sequential-digits",
+    "dataset_index": 2843,
+    "candidate_type": "gemma",
+    "expected_status": "pass",
+    "expected_failure_category": "expected_correct",
+    "review_basis": "manual fixture/code inspection",
+    "note": "Equivalent BFS plus sort."
+  },
+  {
+    "jira": "TRACER-32",
+    "slug": "check-if-one-string-swap-can-make-strings-equal",
+    "dataset_index": 2846,
+    "candidate_type": "buggy",
+    "expected_status": "fail",
+    "expected_failure_category": "assertion_failure",
+    "review_basis": "manual fixture/code inspection",
+    "note": "Equal strings incorrectly return False because the equality branch is unreachable."
+  },
+  {
+    "jira": "TRACER-32",
+    "slug": "check-if-one-string-swap-can-make-strings-equal",
+    "dataset_index": 2846,
+    "candidate_type": "reference",
+    "expected_status": "pass",
+    "expected_failure_category": "expected_correct",
+    "review_basis": "manual fixture/code inspection",
+    "note": "Reference handles zero or two cross-matching differences."
+  },
+  {
+    "jira": "TRACER-32",
+    "slug": "check-if-one-string-swap-can-make-strings-equal",
+    "dataset_index": 2846,
+    "candidate_type": "qwen",
+    "expected_status": "pass",
+    "expected_failure_category": "expected_correct",
+    "review_basis": "manual fixture/code inspection",
+    "note": "Qwen is an exact/reference match."
+  },
+  {
+    "jira": "TRACER-32",
+    "slug": "check-if-one-string-swap-can-make-strings-equal",
+    "dataset_index": 2846,
+    "candidate_type": "gemma",
+    "expected_status": "pass",
+    "expected_failure_category": "expected_correct",
+    "review_basis": "manual fixture/code inspection",
+    "note": "Equivalent two-mismatch cross-match logic."
+  },
+  {
+    "jira": "TRACER-32",
+    "slug": "number-complement",
+    "dataset_index": 2850,
+    "candidate_type": "buggy",
+    "expected_status": "fail",
+    "expected_failure_category": "syntax_error",
+    "review_basis": "manual fixture/code inspection",
+    "note": "Original buggy code has invalid indentation."
+  },
+  {
+    "jira": "TRACER-32",
+    "slug": "number-complement",
+    "dataset_index": 2850,
+    "candidate_type": "reference",
+    "expected_status": "pass",
+    "expected_failure_category": "expected_correct",
+    "review_basis": "manual fixture/code inspection",
+    "note": "Reference bit complement logic is correct for positive num."
+  },
+  {
+    "jira": "TRACER-32",
+    "slug": "number-complement",
+    "dataset_index": 2850,
+    "candidate_type": "qwen",
+    "expected_status": "fail",
+    "expected_failure_category": "syntax_error",
+    "review_basis": "manual fixture/code inspection",
+    "note": "Qwen preserves the indentation defect."
+  },
+  {
+    "jira": "TRACER-32",
+    "slug": "number-complement",
+    "dataset_index": 2850,
+    "candidate_type": "gemma",
+    "expected_status": "pass",
+    "expected_failure_category": "expected_correct",
+    "review_basis": "manual fixture/code inspection",
+    "note": "Gemma flips the binary representation correctly."
+  },
+  {
+    "jira": "TRACER-32",
+    "slug": "alternating-digit-sum",
+    "dataset_index": 2854,
+    "candidate_type": "buggy",
+    "expected_status": "fail",
+    "expected_failure_category": "syntax_error",
+    "review_basis": "manual fixture/code inspection",
+    "note": "Original buggy code has invalid indentation."
+  },
+  {
+    "jira": "TRACER-32",
+    "slug": "alternating-digit-sum",
+    "dataset_index": 2854,
+    "candidate_type": "reference",
+    "expected_status": "pass",
+    "expected_failure_category": "expected_correct",
+    "review_basis": "manual fixture/code inspection",
+    "note": "Reference alternating-sign logic is correct."
+  },
+  {
+    "jira": "TRACER-32",
+    "slug": "alternating-digit-sum",
+    "dataset_index": 2854,
+    "candidate_type": "qwen",
+    "expected_status": "fail",
+    "expected_failure_category": "syntax_error",
+    "review_basis": "manual fixture/code inspection",
+    "note": "Qwen preserves the indentation defect."
+  },
+  {
+    "jira": "TRACER-32",
+    "slug": "alternating-digit-sum",
+    "dataset_index": 2854,
+    "candidate_type": "gemma",
+    "expected_status": "pass",
+    "expected_failure_category": "expected_correct",
+    "review_basis": "manual fixture/code inspection",
+    "note": "Gemma correctly alternates + and - by digit position."
+  }
+]

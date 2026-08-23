@@ -1,0 +1,29 @@
+{
+  "jira": "TRACER-32",
+  "sample_count": 5,
+  "candidate_run_count": 20,
+  "reference_pass_count": 5,
+  "buggy_fail_count": 5,
+  "qwen_pass_count": 2,
+  "gemma_pass_count": 5,
+  "sanity_gate_passed": true,
+  "validator_config": {
+    "backend": "docker",
+    "execution_enabled": true,
+    "docker_image": "python:3.11-slim",
+    "timeout_seconds": 10.0,
+    "memory_mb": 256,
+    "cpu_limit": 0.5,
+    "pids_limit": 64,
+    "network_mode": "none",
+    "read_only_root": true,
+    "workspace_read_only": true,
+    "cap_drop": [
+      "ALL"
+    ],
+    "no_new_privileges": true,
+    "tmpfs": "/tmp:rw,noexec,nosuid,size=64m",
+    "python_isolated_mode": true,
+    "python_no_bytecode": true
+  }
+}
