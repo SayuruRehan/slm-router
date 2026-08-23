@@ -1,0 +1,37 @@
+[
+  {
+    "jira": "TRACER-32",
+    "slug": "nim-game",
+    "dataset_index": 2841,
+    "candidate_preamble": "from typing import List, Optional\nfrom collections import deque\n",
+    "test_code": "s = Solution()\nassert s.canWinNim(1) is True\nassert s.canWinNim(2) is True\nassert s.canWinNim(3) is True\nassert s.canWinNim(4) is False\nassert s.canWinNim(8) is False\nassert s.canWinNim(10) is True\n"
+  },
+  {
+    "jira": "TRACER-32",
+    "slug": "sequential-digits",
+    "dataset_index": 2843,
+    "candidate_preamble": "from typing import List, Optional\nfrom collections import deque\n",
+    "test_code": "s = Solution()\nassert s.sequentialDigits(100, 300) == [123, 234]\nassert s.sequentialDigits(1000, 13000) == [1234, 2345, 3456, 4567, 5678, 6789, 12345]\nassert s.sequentialDigits(58, 155) == [67, 78, 89, 123]\n"
+  },
+  {
+    "jira": "TRACER-32",
+    "slug": "check-if-one-string-swap-can-make-strings-equal",
+    "dataset_index": 2846,
+    "candidate_preamble": "from typing import List, Optional\nfrom collections import deque\n",
+    "test_code": "s = Solution()\nassert s.areAlmostEqual(\"bank\", \"kanb\") is True\nassert s.areAlmostEqual(\"attack\", \"defend\") is False\nassert s.areAlmostEqual(\"kelb\", \"kelb\") is True\nassert s.areAlmostEqual(\"abcd\", \"dcba\") is False\nassert s.areAlmostEqual(\"aa\", \"ac\") is False\nassert s.areAlmostEqual(\"ab\", \"ba\") is True\n"
+  },
+  {
+    "jira": "TRACER-32",
+    "slug": "number-complement",
+    "dataset_index": 2850,
+    "candidate_preamble": "from typing import List, Optional\nfrom collections import deque\n",
+    "test_code": "s = Solution()\nassert s.findComplement(5) == 2\nassert s.findComplement(1) == 0\nassert s.findComplement(10) == 5\nassert s.findComplement(7) == 0\nassert s.findComplement(8) == 7\n"
+  },
+  {
+    "jira": "TRACER-32",
+    "slug": "alternating-digit-sum",
+    "dataset_index": 2854,
+    "candidate_preamble": "from typing import List, Optional\nfrom collections import deque\n",
+    "test_code": "s = Solution()\nassert s.alternateDigitSum(521) == 4\nassert s.alternateDigitSum(111) == 1\nassert s.alternateDigitSum(886996) == 0\nassert s.alternateDigitSum(1) == 1\nassert s.alternateDigitSum(10) == 1\n"
+  }
+]

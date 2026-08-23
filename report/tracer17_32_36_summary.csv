@@ -1,0 +1,11 @@
+jira,area,metric,value,status,notes
+TRACER-17,manual review,unresolved cases reviewed,29,complete,"single AI-assisted reviewer, per project owner"
+TRACER-17,manual review,Qwen final correct,6/20,complete,30.0%
+TRACER-17,manual review,Gemma final correct,7/20,complete,35.0%
+TRACER-17,manual review,overall final correct,13/40,complete,32.5%
+TRACER-32,execution pilot,pilot samples,5,fixtures complete,20 candidate executions defined
+TRACER-32,execution pilot,expected reference passes,5/5,manually reviewed,actual Docker run required for recorded execution evidence
+TRACER-32,execution pilot,expected buggy passes,0/5,manually reviewed,actual Docker run required for recorded execution evidence
+TRACER-32,execution pilot,expected Qwen passes,2/5,manually reviewed,not claimed as Docker result
+TRACER-32,execution pilot,expected Gemma passes,5/5,manually reviewed,not claimed as Docker result
+TRACER-36,protocol,correctness hierarchy,defined,freeze candidate,objective tests > syntax failure > reference match > manual review > diagnostics

@@ -1,0 +1,21 @@
+jira,slug,dataset_index,candidate_type,expected_status,expected_failure_category,review_basis,note
+TRACER-32,nim-game,2841,buggy,fail,syntax_error,manual fixture/code inspection,Original buggy code has invalid indentation.
+TRACER-32,nim-game,2841,reference,pass,expected_correct,manual fixture/code inspection,Reference implements n % 4 != 0.
+TRACER-32,nim-game,2841,qwen,fail,assertion_failure,manual fixture/code inspection,Candidate returns the inverted Nim condition.
+TRACER-32,nim-game,2841,gemma,pass,expected_correct,manual fixture/code inspection,Gemma matches the correct condition.
+TRACER-32,sequential-digits,2843,buggy,fail,syntax_error,manual fixture/code inspection,Original buggy code has invalid method indentation.
+TRACER-32,sequential-digits,2843,reference,pass,expected_correct,manual fixture/code inspection,Reference BFS is correct.
+TRACER-32,sequential-digits,2843,qwen,pass,expected_correct,manual fixture/code inspection,Equivalent BFS plus sorted output.
+TRACER-32,sequential-digits,2843,gemma,pass,expected_correct,manual fixture/code inspection,Equivalent BFS plus sort.
+TRACER-32,check-if-one-string-swap-can-make-strings-equal,2846,buggy,fail,assertion_failure,manual fixture/code inspection,Equal strings incorrectly return False because the equality branch is unreachable.
+TRACER-32,check-if-one-string-swap-can-make-strings-equal,2846,reference,pass,expected_correct,manual fixture/code inspection,Reference handles zero or two cross-matching differences.
+TRACER-32,check-if-one-string-swap-can-make-strings-equal,2846,qwen,pass,expected_correct,manual fixture/code inspection,Qwen is an exact/reference match.
+TRACER-32,check-if-one-string-swap-can-make-strings-equal,2846,gemma,pass,expected_correct,manual fixture/code inspection,Equivalent two-mismatch cross-match logic.
+TRACER-32,number-complement,2850,buggy,fail,syntax_error,manual fixture/code inspection,Original buggy code has invalid indentation.
+TRACER-32,number-complement,2850,reference,pass,expected_correct,manual fixture/code inspection,Reference bit complement logic is correct for positive num.
+TRACER-32,number-complement,2850,qwen,fail,syntax_error,manual fixture/code inspection,Qwen preserves the indentation defect.
+TRACER-32,number-complement,2850,gemma,pass,expected_correct,manual fixture/code inspection,Gemma flips the binary representation correctly.
+TRACER-32,alternating-digit-sum,2854,buggy,fail,syntax_error,manual fixture/code inspection,Original buggy code has invalid indentation.
+TRACER-32,alternating-digit-sum,2854,reference,pass,expected_correct,manual fixture/code inspection,Reference alternating-sign logic is correct.
+TRACER-32,alternating-digit-sum,2854,qwen,fail,syntax_error,manual fixture/code inspection,Qwen preserves the indentation defect.
+TRACER-32,alternating-digit-sum,2854,gemma,pass,expected_correct,manual fixture/code inspection,Gemma correctly alternates + and - by digit position.
