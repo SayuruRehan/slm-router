@@ -1,6 +1,6 @@
 # TRACER Experiment Contract
 
-Version: 1.0
+Version: 1.1
 
 ## Purpose
 
@@ -28,6 +28,25 @@ The action-specific risk target is the probability that the chosen action's fina
 - Raw response and extracted code.
 - Validator outcome, label source, and manual-review requirement.
 - Latency and token counts.
+- Effective validator configuration used to produce the label.
+- Runtime operating-system and hardware context for the baseline run.
+
+<!-- TRACER-29: validator provenance was made part of the experiment contract. -->
+## Validator provenance
+
+Every newly generated record and run summary must identify the effective validator configuration. For Docker validation this includes:
+
+- Backend name and execution-enabled state.
+- Docker image.
+- Wall-time timeout.
+- Memory, CPU, and process limits.
+- Network mode.
+- Read-only root and read-only workspace settings.
+- Dropped Linux capabilities and no-new-privileges setting.
+- Temporary filesystem policy.
+- Python isolated-mode (`-I`) and no-bytecode (`-B`) settings.
+
+A disabled-validator run must be unambiguously represented as `backend: disabled` and must not imply that Docker isolation controls were actually applied. Older result files that do not contain validator metadata remain readable, but they must be treated as legacy artifacts and regenerated before they are used as fully reproducible evidence.
 
 ## Label hierarchy
 
@@ -46,12 +65,26 @@ Generated code must not run directly on the host. The included Docker backend us
 - Dropped Linux capabilities and no-new-privileges.
 - CPU, memory, process, and wall-time limits.
 - Ephemeral container removal.
+- Python isolated mode while loading `candidate.py` from its explicit workspace path.
 
 This reduces risk but is not perfect isolation. Keep Docker patched and use a dedicated research environment.
 
 ## Baseline comparison rule
 
 Qwen and Gemma baselines must differ only in model identity. They share the same manifest, prompt version, generation controls, and validation implementation.
+
+<!-- TRACER-31: freeze and verify the shared 20-sample baseline contract. -->
+## Reproducible 20-sample baseline protocol
+
+1. Validate both configuration files with the canonical `tracer-baseline` CLI.
+2. Run Qwen and Gemma on the same fixed 20-sample manifest.
+3. Require exactly 20 records from each model and fail the run if any record is missing.
+4. Verify the ordered `(dataset_index, slug)` sample identities are identical between runs.
+5. Preserve model digest, Ollama version, prompt/completion token counts, latency, raw output, extracted output, validation evidence, and validator provenance.
+6. Preserve host OS, machine architecture, processor string when available, Python version, and the final shared sample identities in the run metadata.
+7. Do not silently exclude failed model requests or incomplete outputs from the reported baseline.
+
+The `scripts/run_tracer31_baselines.py` orchestration script implements these checks and writes `results/baselines/tracer31_run_manifest.json` after both runs pass validation.
 
 ## Sprint 1 success criteria
 
@@ -60,4 +93,3 @@ Qwen and Gemma baselines must differ only in model identity. They share the same
 - Either model can be selected by changing only the configuration path.
 - JSON, CSV, and summary files preserve the required metadata.
 - Unresolved examples are not counted as incorrect.
-

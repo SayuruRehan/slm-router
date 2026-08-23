@@ -1,42 +1,69 @@
 import json
-import os
-import subprocess
-import sys
+from pathlib import Path
 
 import streamlit as st
 
-HERE = os.path.dirname(os.path.abspath(__file__))
-REPO_ROOT = os.path.dirname(os.path.dirname(HERE))
-RESULTS_PATH = os.path.join(
-    REPO_ROOT, "results", "baselines", "qwen25_coder_records.json"
+from tracer.experiments.viewer_runner import (
+    BaselineCliUnavailableError,
+    run_canonical_baseline,
 )
-RUN_PATH = os.path.join(HERE, "run.py")
+
+HERE = Path(__file__).resolve().parent
+REPO_ROOT = HERE.parents[1]
+CONFIG_PATH = REPO_ROOT / "configs" / "qwen25_coder_baseline.yaml"
+RESULTS_PATH = REPO_ROOT / "results" / "baselines" / "qwen25_coder_records.json"
 
 st.set_page_config(page_title="DebugBench SLM smoke test", layout="wide")
 
 st.title("DebugBench SLM smoke test")
-st.caption("qwen2.5-coder:1.5b on the fixed 20-row TRACER DebugBench manifest. "
-           "Select a row to compare the code.")
+st.caption(
+    "qwen2.5-coder:1.5b on the fixed 20-row TRACER DebugBench manifest. "
+    "Select a row to compare the code."
+)
 
 if st.button("Re-run the 20 problems", type="primary"):
-    with st.spinner("Calling Ollama on 20 problems, one at a time..."):
-        proc = subprocess.run([sys.executable, RUN_PATH], capture_output=True, text=True)
-    if proc.returncode == 0:
-        st.success("Run finished. Results below are freshly generated.")
-        with st.expander("Run log (stdout)"):
-            st.code(proc.stdout[-20000:], language="text", wrap_lines=True, height=300)
+    # TRACER-30: Qwen uses the canonical shared runner and verifies its expected output.
+    try:
+        with st.spinner("Running the canonical Qwen baseline on 20 problems..."):
+            outcome = run_canonical_baseline(CONFIG_PATH, RESULTS_PATH, REPO_ROOT)
+    except BaselineCliUnavailableError as exc:
+        st.error(str(exc))
     else:
-        st.error(f"Run failed (exit {proc.returncode}). Is Ollama running?")
-        st.code(proc.stderr[-5000:], language="text", wrap_lines=True)
+        if outcome.success:
+            st.success("Run finished and qwen25_coder_records.json was refreshed.")
+            with st.expander("Run log (stdout)"):
+                st.code(outcome.stdout[-20_000:], language="text", wrap_lines=True, height=300)
+        elif outcome.returncode == 0:
+            st.error(
+                "The runner exited successfully, but qwen25_coder_records.json was not "
+                "created or refreshed. The run is not being reported as successful."
+            )
+            st.code(outcome.stdout[-5000:], language="text", wrap_lines=True)
+        else:
+            st.error(f"Run failed (exit {outcome.returncode}). Is Ollama running?")
+            st.code(outcome.stderr[-5000:], language="text", wrap_lines=True)
 
-if not os.path.exists(RESULTS_PATH):
-    st.warning("No results.json yet — press the button above to generate it.")
+if not RESULTS_PATH.exists():
+    st.warning(
+        "No standardized Qwen results found. Run `tracer-baseline --config "
+        "configs/qwen25_coder_baseline.yaml` from the repository root, or use the button above."
+    )
     st.stop()
 
-with open(RESULTS_PATH) as f:
-    results = json.load(f)
+with RESULTS_PATH.open(encoding="utf-8") as result_file:
+    results = json.load(result_file)
 
 st.caption(f"Showing results from: {RESULTS_PATH}")
+
+validator_metadata = results[0].get("validator_config") if results else None
+with st.expander("Validator configuration used for this result"):
+    if validator_metadata:
+        st.json(validator_metadata)
+    else:
+        st.info(
+            "Legacy result file: validator metadata is not present. Re-run with the canonical "
+            "baseline runner to create TRACER-29 provenance fields."
+        )
 
 with st.expander("What do these columns mean?"):
     st.markdown("""
@@ -56,18 +83,18 @@ normalised syntax trees, so whitespace/comments/formatting are ignored.
 True means the model changed nothing.
 
 **Cosine (diagnostic)** — Check C. Character-trigram similarity to the reference.
-**Not a correctness
-signal.** Buggy and fixed code are near-identical on this dataset, so this sits ~0.97 for everything
-and discriminates nothing — it is logged to demonstrate that, not to grade with it.
+**Not a correctness signal.** Buggy and fixed code are near-identical on this dataset, so this sits
+near 0.97 for many samples and is logged as diagnostic evidence rather than a grading rule.
 
-**Manual verdict** — empty by default, for hand-review. AST matching gives false negatives when the
-model fixes the bug correctly but differently from the reference, so at n=10 these get read by eye.
+**Manual verdict** — empty by default, for hand review. AST matching can reject a
+functionally correct alternative implementation, so unresolved records are reviewed rather than
+silently counted wrong.
 """)
 
 counts = {}
-for r in results:
-    counts[r["outcome"]] = counts.get(r["outcome"], 0) + 1
-review_rate = sum(1 for r in results if r["needs_manual_review"]) / len(results)
+for result in results:
+    counts[result["outcome"]] = counts.get(result["outcome"], 0) + 1
+review_rate = sum(1 for result in results if result["needs_manual_review"]) / len(results)
 
 cols = st.columns(5)
 cols[0].metric("Needs review", f"{review_rate:.0%}")
@@ -80,18 +107,18 @@ for col, outcome in zip(
 
 table = [
     {
-        "#": r["index"],
-        "Problem": r["slug"],
-        "Bug category": r["category"],
-        "Bug subtype": r["subtype"],
-        "Outcome": r["outcome"],
-        "Fixed? (AST)": r["check_a_correct"],
-        "Unchanged? (AST)": r["check_b_unchanged"],
-        "Cosine (diagnostic)": r["check_c_cosine_diagnostic_only"],
-        "Latency (s)": r["latency_sec"],
-        "Manual verdict": r["manual_verdict"],
+        "#": result["index"],
+        "Problem": result["slug"],
+        "Bug category": result["category"],
+        "Bug subtype": result["subtype"],
+        "Outcome": result["outcome"],
+        "Fixed? (AST)": result["check_a_correct"],
+        "Unchanged? (AST)": result["check_b_unchanged"],
+        "Cosine (diagnostic)": result["check_c_cosine_diagnostic_only"],
+        "Latency (s)": result["latency_sec"],
+        "Manual verdict": result["manual_verdict"],
     }
-    for r in results
+    for result in results
 ]
 
 event = st.dataframe(
@@ -107,21 +134,29 @@ event = st.dataframe(
             help="Bug class from the dataset, e.g. syntax / logic / reference error.",
         ),
         "Bug subtype": st.column_config.TextColumn(
-            width="small", help="Specific bug injected, e.g. illegal indentation."),
+            width="small", help="Specific bug injected, e.g. illegal indentation."
+        ),
         "Outcome": st.column_config.TextColumn(
             width="small",
-            help="correct / incorrect / syntax_error / no_change. See the explainer above."),
+            help="reference_match / needs_manual_review / syntax_error / no_change.",
+        ),
         "Fixed? (AST)": st.column_config.CheckboxColumn(
-            width="small", help="Check A: matches the reference solution as a syntax tree."),
+            width="small", help="Check A: matches the reference solution as a syntax tree."
+        ),
         "Unchanged? (AST)": st.column_config.CheckboxColumn(
-            width="small", help="Check B: model returned the buggy code unchanged."),
+            width="small", help="Check B: model returned the buggy code unchanged."
+        ),
         "Cosine (diagnostic)": st.column_config.NumberColumn(
-            width="small", format="%.3f",
-            help="Check C: DIAGNOSTIC ONLY, not a correctness signal."),
+            width="small",
+            format="%.3f",
+            help="Check C: diagnostic only, not a correctness signal.",
+        ),
         "Latency (s)": st.column_config.NumberColumn(
-            width="small", format="%.1f", help="Wall-clock time for the Ollama call."),
+            width="small", format="%.1f", help="Wall-clock time for the Ollama call."
+        ),
         "Manual verdict": st.column_config.TextColumn(
-            width="small", help="Empty until hand-reviewed; edit in results.json."),
+            width="small", help="Empty until hand-reviewed; edit in the stored result."
+        ),
     },
 )
 
@@ -129,20 +164,25 @@ selected_rows = event["selection"]["rows"]
 if not selected_rows:
     st.info("Select a row above to see the code comparison.")
 else:
-    r = results[selected_rows[0]]
-    st.subheader(f"[{r['index']}] {r['slug']}")
-    st.caption(f"{r['category']} → {r['subtype']}  ·  outcome: **{r['outcome']}**")
+    selected = results[selected_rows[0]]
+    st.subheader(f"[{selected['index']}] {selected['slug']}")
+    st.caption(
+        f"{selected['category']} → {selected['subtype']}  ·  "
+        f"outcome: **{selected['outcome']}**"
+    )
 
     col1, col2, col3 = st.columns(3)
     with col1:
         st.markdown("**Buggy code** (input)")
-        st.code(r["buggy_code"], language="python", line_numbers=True, height=420)
+        st.code(selected["buggy_code"], language="python", line_numbers=True, height=420)
     with col2:
         st.markdown("**Model output** (extracted)")
-        st.code(r["extracted_code"], language="python", line_numbers=True, height=420)
+        st.code(selected["extracted_code"], language="python", line_numbers=True, height=420)
     with col3:
         st.markdown("**Reference solution**")
-        st.code(r["reference_solution"], language="python", line_numbers=True, height=420)
+        st.code(
+            selected["reference_solution"], language="python", line_numbers=True, height=420
+        )
 
     with st.expander("Raw model response (before code extraction)"):
-        st.code(r["raw_response"], language="markdown", wrap_lines=True, height=300)
+        st.code(selected["raw_response"], language="markdown", wrap_lines=True, height=300)
