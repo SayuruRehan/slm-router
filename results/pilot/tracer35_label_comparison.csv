@@ -1,0 +1,21 @@
+jira,slug,dataset_index,candidate_type,static_ast_evidence,reviewed_expected_label,execution_result,execution_failure_category,agreement_status,explanation
+TRACER-35,nim-game,2841,buggy,syntax_invalid,incorrect,fail,indentation_error,agree,Original buggy fixture is syntactically invalid and execution fails as expected.
+TRACER-35,nim-game,2841,reference,reference_by_construction,correct,pass,none,agree,Reference implementation passes the deterministic fixture.
+TRACER-35,nim-game,2841,qwen,needs_manual_review_ast_nonmatch,incorrect,fail,assertion_failure,agree_after_review,AST/reference matching was inconclusive; manual code review identified the inverted Nim condition and execution confirmed the functional failure.
+TRACER-35,nim-game,2841,gemma,reference_match,correct,pass,none,agree,Reference/AST match is positive evidence and execution confirms correctness.
+TRACER-35,sequential-digits,2843,buggy,syntax_invalid,incorrect,fail,indentation_error,agree,Original buggy fixture is syntactically invalid and execution fails as expected.
+TRACER-35,sequential-digits,2843,reference,reference_by_construction,correct,pass,none,agree,Reference implementation passes the deterministic fixture.
+TRACER-35,sequential-digits,2843,qwen,needs_manual_review_ast_nonmatch,correct,pass,none,ast_nonmatch_but_functionally_correct,The candidate is functionally equivalent to the reference despite not being an exact normalized AST match; manual review and execution both label it correct.
+TRACER-35,sequential-digits,2843,gemma,needs_manual_review_ast_nonmatch,correct,pass,none,ast_nonmatch_but_functionally_correct,Equivalent BFS/sorted implementation is functionally correct even though exact AST/reference matching did not resolve it.
+TRACER-35,check-if-one-string-swap-can-make-strings-equal,2846,buggy,ast_nonmatch,incorrect,fail,assertion_failure,agree,The buggy implementation is syntactically valid but fails a discriminative assertion for equal strings.
+TRACER-35,check-if-one-string-swap-can-make-strings-equal,2846,reference,reference_by_construction,correct,pass,none,agree,Reference implementation passes the deterministic fixture.
+TRACER-35,check-if-one-string-swap-can-make-strings-equal,2846,qwen,reference_match,correct,pass,none,agree,Exact/reference AST match and objective execution both support a correct label.
+TRACER-35,check-if-one-string-swap-can-make-strings-equal,2846,gemma,needs_manual_review_ast_nonmatch,correct,pass,none,ast_nonmatch_but_functionally_correct,Alternative two-mismatch cross-match logic is correct although the normalized AST differs from the benchmark reference.
+TRACER-35,number-complement,2850,buggy,syntax_invalid,incorrect,fail,indentation_error,agree,Original buggy fixture is syntactically invalid and execution fails as expected.
+TRACER-35,number-complement,2850,reference,reference_by_construction,correct,pass,none,agree,Reference implementation passes the deterministic fixture.
+TRACER-35,number-complement,2850,qwen,syntax_error,incorrect,fail,indentation_error,agree,Static validation and Docker execution both identify an indentation/syntax failure.
+TRACER-35,number-complement,2850,gemma,needs_manual_review_ast_nonmatch,correct,pass,none,ast_nonmatch_but_functionally_correct,The binary-string implementation differs structurally from the reference but passes all deterministic tests and was reviewed as correct.
+TRACER-35,alternating-digit-sum,2854,buggy,syntax_invalid,incorrect,fail,indentation_error,agree,Original buggy fixture is syntactically invalid and execution fails as expected.
+TRACER-35,alternating-digit-sum,2854,reference,reference_by_construction,correct,pass,none,agree,Reference implementation passes the deterministic fixture.
+TRACER-35,alternating-digit-sum,2854,qwen,syntax_error,incorrect,fail,indentation_error,agree,Static validation and Docker execution both identify an indentation/syntax failure.
+TRACER-35,alternating-digit-sum,2854,gemma,needs_manual_review_ast_nonmatch,correct,pass,none,ast_nonmatch_but_functionally_correct,The generated implementation differs structurally from the reference but manual inspection and executable tests both show correct behavior.
