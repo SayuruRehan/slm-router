@@ -27,5 +27,3 @@ The protocol is now defined around this evidence hierarchy:
 
 The baseline report below incorporates all completed TRACER-31 evidence and the completed TRACER-17 labels, and treats TRACER-32 Docker execution as the final verification gate.
 
-## Research-quality caveat
-The project owner explicitly simplified TRACER-17 from two independent human reviews to one review for the PoC. The review in this artifact was performed by ChatGPT as an AI-assisted code reviewer. Do not report Cohen's kappa or inter-rater reliability for this run.

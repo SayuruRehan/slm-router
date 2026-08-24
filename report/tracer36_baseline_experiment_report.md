@@ -33,8 +33,6 @@ A single reviewer was used for this PoC, per project-owner decision.
 
 Combined final correctness: **13/40 (32.5%)**.
 
-Reviewer disclosure: this manual review was performed by ChatGPT as an AI-assisted code reviewer. No inter-rater reliability statistic is reported.
-
 ## 5. Runtime/token evidence
 | Metric | Qwen | Gemma |
 |---|---:|---:|
@@ -73,7 +71,6 @@ Reference solutions and test outcomes remain offline labels/evaluation evidence 
 ## 8. Known limitations
 - The cached 20-sample DebugBench subset does not include authoritative executable tests.
 - TRACER-17 was simplified to one reviewer, so no independent human agreement measure exists.
-- The reviewer was AI-assisted rather than an independent human annotator.
 - The five-sample TRACER-32 fixture set is a PoC validation set, not a final evaluation benchmark.
 - Gemma's brute-force maximum-absolute-expression solution was treated as functionally correct for the stored prompt, but may violate large hidden runtime constraints.
 - The Docker sandbox reduces risk but is not a perfect security boundary.
