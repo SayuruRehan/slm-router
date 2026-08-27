@@ -1,26 +1,28 @@
 # TRACER-8 Literature Repository Audit
 
+**Updated:** 2026-08-27
+
 ## What was checked
-- `literature/TriRoute_Research_Paper_Tracker.xlsx`
-- `literature/paper-tracker-accept-edit-regenerate.xlsx` (repository presence/version noted)
-- all files currently listed under `literature/paper_notes/`
-- updated public literature through 2026-08-23 for routing, calibration, selective risk, abstention, repair/correction and objective validation
+- historical literature trackers;
+- the canonical TRACER evidence matrix;
+- repository paper notes;
+- closest-work literature used for TRACER-25;
+- recent 2026 work relevant to post-response routing, conformal cascading, and resample/reroute decisions.
 
-## Findings
-- Two spreadsheet tracker artifacts exist; a canonical CSV is preferable for version-controlled research evidence.
-- Ten paper-note Markdown files existed before this audit.
-- Five papers already present in the main tracker lacked a note file.
-- Existing notes are useful but several still contain `Not yet read`, `TBD`, or full-text-reading placeholders.
-- `TriRoute_Research_Paper_Tracker.xlsx` still uses the previous project name.
-- The tracker copy records FrugalGPT as 2023/TMLR; final TMLR publication is 2024.
-- The tracker is strong on routing/cascading and correction, but did not adequately cover calibration/selective-risk foundations or the newest 2025–2026 related work.
+## Current evidence set
+- **27 total sources**
+- **24 verified peer-reviewed**
+- **3 emerging preprints:** Resample or Reroute?, RLM-Cascade, and Conformal Cascade
 
-## Changes prepared in this patch
-- canonical CSV evidence matrix;
-- Markdown synthesis;
-- updated TRACER-named XLSX tracker;
-- five missing note files for papers already tracked;
-- ten additional notes covering calibration/selective-risk foundations and newer closest work.
+## Reconciliation completed
+- FrugalGPT final publication year corrected to 2024.
+- Legacy TriRoute tracker is retained only as a historical/planning artifact.
+- Missing original tracker notes were added in the earlier TRACER-24 update.
+- Calibration/selective-risk foundations and recent routing work are present.
+- Week 3's RLM-Cascade and Conformal Cascade readings are now represented in the canonical matrix and paper notes.
 
-## Important novelty correction
-Do not write that all prior routers are binary. The literature now includes adaptive best-of-n routing, abstention policies, selective generation, and resampling/rerouting. The TRACER gap must remain specific to calibrated post-response residual failure risk across ACCEPT, REPAIR, and independent REGENERATE.
+## Novelty correction
+Do not claim that prior routing is only binary, that calibrated thresholds are new, or that post-response enhancement is absent. The evidence supports a narrower TRACER contribution centred on **separately calibrated residual failure for ACCEPT, REPAIR, and independent REGENERATE after an initial SLM response exists**.
+
+## Remaining review gate
+A second team member should review the canonical matrix and the TRACER-25 comparison before TRACER-24 is closed.
