@@ -8,7 +8,7 @@
 
 ## Canonical use
 
-`TRACER_Literature_Evidence_Matrix.csv` is the canonical, diffable evidence table for TRACER-24. The XLSX trackers remain planning/source artifacts. The canonical matrix now includes the two recent papers discussed during Week 3 that were missing from the previous audit: **RLM-Cascade** and **Conformal Cascade**.
+`Literature_Evidence_Matrix.csv` is the canonical, diffable evidence table for TRACER-24. The XLSX trackers remain planning/source artifacts. The canonical matrix now includes the two recent papers discussed during Week 3 that were missing from the previous audit: **RLM-Cascade** and **Conformal Cascade**.
 
 ## Audit corrections and reconciliation
 
