@@ -15,7 +15,7 @@ This artifact tests the proposed TRACER gap against the closest works using cons
 - reported limitation relevant to TRACER;
 - the exact distinction TRACER still proposes.
 
-The machine-readable version is `TRACER_Closest_Work_Comparison.csv`.
+The machine-readable version is `Closest_Work_Comparison.csv`.
 
 ## Closest-work synthesis
 
