@@ -3,35 +3,50 @@
 **Related Jira:** TRACER-125  
 **Status:** Proposal-ready plan aligned to the current Jira milestones and one-week sprint cadence.
 
-## 5.1 Delivery Approach
+## 5.1 Agile and Scrum Delivery Approach
 
-TRACER is managed using an **Agile Scrum-style process with one-week sprints**. Jira is the official backlog and work-tracking system, while GitHub is used for source control, pull requests, experiment artefacts, and research documentation.
+TRACER is managed using an **Agile, Scrum-style research delivery process with one-week sprints**. Agile is suitable for this project because the work contains research uncertainty: benchmark limitations, validator behaviour, model/API availability, feature usefulness, and experimental findings can require the team to revise implementation details while keeping the research question and evaluation controls stable. A short sprint cadence allows the team to test assumptions early and reduce the risk of discovering critical problems only near the final evaluation.
 
-The project uses the following working practices:
+Scrum is adapted to the academic research setting as follows:
 
-- epics represent major research capabilities/work packages;
-- user stories/features/tasks break epics into verifiable deliverables;
-- subtasks are used for small implementation or review activities;
-- work is linked to the relevant Jira key in branches/commits/PRs where practical;
-- research decisions and experiment configurations are versioned rather than kept only in chat or meeting notes;
-- work requiring independent review is not marked complete until the review gate is satisfied;
-- one-week sprint reviews are used to compare planned and completed work and adjust the next sprint.
+- **Product/Research Backlog:** Jira contains the ordered epics, stories, tasks, dependencies, acceptance criteria, and review gates.
+- **Sprint Planning:** at the beginning of each one-week sprint, the team selects the highest-priority research and implementation items that are ready to execute.
+- **Weekly coordination / stand-up check:** progress, blockers, experiment dependencies, and review needs are discussed during the sprint rather than waiting for the end of a larger phase.
+- **Sprint Review:** completed code, literature artefacts, validators, datasets, or experiment outputs are demonstrated or reviewed against their acceptance criteria.
+- **Retrospective:** the team records process or experimental issues and adjusts the next sprint where necessary.
+- **Increment:** each sprint should produce a versioned research increment such as a validated dataset slice, frozen protocol, experiment runner, model artefact, evaluation result, or proposal/thesis section.
 
-## 5.2 Current Major Work Packages and Milestones
+GitHub is used for source control, pull requests, experiment artefacts, and research documentation. Jira is the source of truth for work status and dependencies. Research-critical changes are versioned and reviewed so that the project remains iterative without silently changing the experimental design after seeing results.
 
-The timeline is aligned to the current Jira epic due dates.
+## 5.2 Work Breakdown Structure and Responsibility Allocation
 
-| Work package | Jira | Target milestone | Measurable exit condition |
-|---|---|---:|---|
-| Literature study and research definition | TRACER-8 | **3 Sep 2026** | Evidence matrix, closest-work gap, research question/definitions, verified reference set |
-| Research proposal | TRACER-119 | **3 Sep 2026** | Proposal sections integrated and ready for submission review |
-| Data and validators | TRACER-19 | **6 Sep 2026** | Versioned dataset manifests, provenance, objective validators, review protocol |
-| Action-outcome generation | TRACER-20 | **20 Sep 2026** | Frozen ACCEPT/REPAIR/REGENERATE executors and labelled action-outcome dataset |
-| ACRE model and calibration | TRACER-21 | **4 Oct 2026** | Leakage-safe feature pipeline, trained action-risk model, calibrated heads |
-| Routing and end-to-end integration | TRACER-75 | **11 Oct 2026** | `epsilon` policy and all action executors integrated with repeatable evaluation runner |
-| Evaluation and robustness | TRACER-22 | **18 Oct 2026** | Held-out primary evaluation, baseline comparison, ablations, robustness/statistical analysis |
-| Governance and living documentation | TRACER-10 | **25 Oct 2026** | Decision log, experiment registry, risk register, runbook and governance records current |
-| Thesis and final presentation | TRACER-23 | **25 Oct 2026** | Final research narrative, figures/tables, thesis/presentation artefacts ready for final academic review |
+The supervisor requested the WBS to identify the member responsible for each work package. The allocation below is a **primary responsibility model**: it assigns a lead for coordination while retaining peer review by the other members. Jira may be updated if workload is rebalanced.
+
+| WBS | Work package | Jira | Primary responsible member(s) | Supporting/review members | Exit condition |
+|---|---|---|---|---|---|
+| 1.0 | Literature study and research definition | TRACER-8 | **Lithma Perera** | Sayuru, Sulakna | Evidence matrix, closest-work gap, research definitions, verified reference set |
+| 2.0 | Research proposal | TRACER-119 | **Sayuru Rehan Bopitiya** | Lithma, Sulakna | Proposal content integrated, citations checked, submission review complete |
+| 3.0 | Data preparation and validators | TRACER-19 | **Sulakna Weerasinghe** (data/provenance) + **Sayuru** (validator implementation) | Lithma | Versioned manifests, provenance, objective validators, review protocol |
+| 4.0 | Action-outcome generation | TRACER-20 | **Sayuru Rehan Bopitiya** | Lithma, Sulakna | Frozen action contracts and labelled ACCEPT/REPAIR/REGENERATE outcomes |
+| 5.0 | ACRE model and calibration | TRACER-21 | **Sayuru Rehan Bopitiya** | Lithma, Sulakna | Leakage-safe feature pipeline, trained risk model, calibrated heads |
+| 6.0 | Routing policy and end-to-end integration | TRACER-75 | **Sayuru Rehan Bopitiya** | Lithma, Sulakna | `epsilon` policy integrated with all actions and repeatable runner |
+| 7.0 | Evaluation, robustness and statistics | TRACER-22 | **Sayuru Rehan Bopitiya** (analysis) + **Sulakna Weerasinghe** (QA) | Lithma | Held-out results, baselines, ablations, calibration/robustness analysis |
+| 8.0 | Governance and living documentation | TRACER-10 | **Sayuru Rehan Bopitiya** | Lithma, Sulakna | Decision log, experiment registry, risk register, documentation current |
+| 9.0 | Thesis and final presentation | TRACER-23 | **All three members**; Sayuru coordinates integration | All three | Final thesis narrative, figures/tables, presentation, reproducibility package |
+
+### Milestone dates
+
+| Work package | Target milestone |
+|---|---:|
+| Literature study and research definition | **3 Sep 2026** |
+| Research proposal | **3 Sep 2026** |
+| Data and validators | **6 Sep 2026** |
+| Action-outcome generation | **20 Sep 2026** |
+| ACRE model and calibration | **4 Oct 2026** |
+| Routing and end-to-end integration | **11 Oct 2026** |
+| Evaluation and robustness | **18 Oct 2026** |
+| Governance and living documentation | **25 Oct 2026** |
+| Thesis and final presentation | **25 Oct 2026** |
 
 ## 5.3 One-Week Sprint Plan
 
@@ -52,38 +67,11 @@ The timeline is aligned to the current Jira epic due dates.
 
 ## 5.4 Gantt Chart
 
-```mermaid
-gantt
-    title TRACER Project Plan — One-Week Sprint Cadence
-    dateFormat  YYYY-MM-DD
-    axisFormat  %d %b
+![Figure 1. TRACER project Gantt chart showing the twelve one-week sprints from 3 August to 25 October 2026.](figures/tracer_project_gantt.png)
 
-    section Foundation
-    Project setup + initial PoC            :done, s1, 2026-08-03, 7d
-    Baseline experimentation              :done, s2, 2026-08-10, 7d
-    Validator + execution pilot           :done, s3, 2026-08-17, 7d
+**Figure 1.** TRACER project Gantt chart aligned to the current one-week sprint plan and Jira milestone sequence.
 
-    section Research + Proposal
-    Literature gap + proposal drafting    :active, s4, 2026-08-24, 7d
-    Proposal integration + validator v1   :s5, 2026-08-31, 7d
-
-    section Action Outcomes
-    Action executors + prompt freeze      :s6, 2026-09-07, 7d
-    Full three-action outcome run         :s7, 2026-09-14, 7d
-
-    section ACRE
-    Feature pipeline + model training     :s8, 2026-09-21, 7d
-    Calibration + model selection         :s9, 2026-09-28, 7d
-
-    section Routing + Evaluation
-    Routing policy + end-to-end integration :s10, 2026-10-05, 7d
-    Held-out evaluation + robustness      :s11, 2026-10-12, 7d
-
-    section Finalisation
-    Thesis + final presentation           :s12, 2026-10-19, 7d
-```
-
-The Mermaid chart is included for repository readability. The same dates are also provided in tabular form so the proposal remains usable if the final document does not render Mermaid.
+The same dates are also provided in tabular form so the schedule remains readable if the figure is reformatted in the official proposal template.
 
 ## 5.5 Team Responsibilities
 

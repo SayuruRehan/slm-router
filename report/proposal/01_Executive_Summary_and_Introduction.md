@@ -84,17 +84,29 @@ TRACER is intentionally risk-focused. Cost and latency are secondary descriptive
 - Claiming formal conformal guarantees unless separately implemented and validated.
 - Production-scale commercial deployment.
 
-## 1.7 Expected Outcomes
+## 1.7 Expected Key Findings / Research Outcomes
 
-Expected project outputs are:
+Because this is a research proposal, the final empirical findings are not known in advance. The study is designed to determine the following:
 
-- a versioned action-outcome dataset;
-- objective validators and provenance mechanisms;
-- a trained, calibrated ACRE model;
-- an end-to-end ACCEPT/REPAIR/REGENERATE routing policy;
-- comparison against fixed and binary baselines;
-- analysis of calibration, false acceptance, risk regret, repair success, and repair damage;
-- cross-SLM evidence where feasible; and
-- a reproducible implementation and documented experimental methodology.
+1. **Whether action-specific residual risks are learnable:** whether features from the task and initial SLM response contain enough information to distinguish the failure risk of ACCEPT, REPAIR, and REGENERATE.
+2. **Whether calibration improves routing reliability:** whether calibrated action-risk probabilities reduce false acceptance and final incorrect-response rate relative to uncalibrated routing.
+3. **When REPAIR should be preferred over REGENERATE:** whether targeted correction and independent regeneration succeed on different subsets of cases rather than behaving as interchangeable escalation actions.
+4. **How often repair is harmful:** the prevalence of repair damage, where intervention turns an initially correct or recoverable answer into an incorrect final answer.
+5. **How close learned routing approaches the offline oracle:** the residual gap between ACRE-selected actions and the best action observed offline for each task.
+6. **Whether the learned risk estimates transfer across SLMs:** whether discrimination and calibration learned primarily from Qwen responses remain useful on Gemma responses.
 
-The project does **not** assume that TRACER will outperform every baseline. A valid outcome may show that action-specific routing helps only under particular task, model, or calibration conditions. The contribution is the formulation, implementation, and controlled empirical evaluation of the tri-action residual-risk approach.
+A valid research outcome may show improvement only for particular domains, action types, or risk thresholds. The study therefore treats negative or mixed findings as informative rather than assuming TRACER must outperform every baseline.
+
+## 1.8 Research Deliverables
+
+The planned project deliverables are:
+
+- a versioned and reproducible multi-domain source-task manifest and action-outcome dataset;
+- objective code and numerical validators with provenance and safety controls;
+- frozen ACCEPT, REPAIR, and REGENERATE action contracts and prompts;
+- a leakage-safe pre-action feature pipeline;
+- a trained ACRE model with separately calibrated `R_ACCEPT`, `R_REPAIR`, and `R_REGENERATE`;
+- an end-to-end risk-controlled routing policy using the `epsilon` threshold;
+- fixed-action, binary-routing, uncalibrated, calibrated, and oracle baseline implementations;
+- a held-out evaluation covering correctness, false acceptance, calibration, risk regret, repair success/damage, and cross-SLM transfer; and
+- a reproducible GitHub research implementation together with the thesis, figures, result tables, and final presentation.

@@ -47,7 +47,7 @@ Two primary task domains are planned.
 ### Numerical reasoning
 
 - **FinQA** is the primary numerical-reasoning benchmark and contains financial question-answering problems with structured reasoning information (Chen et al. 2021).
-- **TAT-QA** remains optional if time and data-processing scope permit; it is not required for the minimum study.
+- **TAT-QA** remains optional if time and data-processing scope permit; it is not required for the minimum study (Zhu et al. 2021).
 
 The target primary action-outcome dataset is approximately **1,000–1,400 source examples**, with roughly **500–700 examples per domain**. A separate **250–350-example Gemma transfer set** is planned where feasible.
 
@@ -275,7 +275,22 @@ The proposed study uses public research benchmarks and model-generated responses
 
 **Research integrity.** Gold/reference answers and downstream action outcomes are used only for offline supervision and evaluation. They are prohibited from inference-time features. Negative or null results will be retained and reported rather than removed to improve headline performance.
 
-## 4.15 Threats to Validity
+## 4.15 Planned Tools and Technologies
+
+The planned implementation stack is:
+
+- **Python 3** for experiment orchestration, preprocessing, validation, modelling, and evaluation;
+- **PyTorch** for the ACRE neural estimator;
+- **Hugging Face Transformers** and **vLLM** for local SLM inference where supported;
+- **scikit-learn / NumPy / pandas** for calibration baselines, preprocessing, statistical utilities, and analysis;
+- **Docker** for sandboxed execution of generated code;
+- **OpenAI API** for GPT-4.1 REPAIR and REGENERATE calls;
+- **Git and GitHub** for version control, pull requests, experiment artefacts, and reproducibility records; and
+- **Jira** for backlog management, sprint tracking, acceptance criteria, dependencies, and review gates.
+
+Exact package versions will be frozen in the experiment environment before the primary full-scale runs.
+
+## 4.16 Threats to Validity
 
 Key threats include:
 
