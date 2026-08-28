@@ -2,15 +2,15 @@
 
 **Related Jira:** TRACER-126  
 **Style:** Chicago Author-Date  
-**Status:** Proposal reference set for Sections 1–5. Preprints are explicitly marked.
+**Status:** Final integrated-draft reference set; final submission check remains part of TRACER-127.
 
-Aggarwal, Pranjal, Aman Madaan, Arpit Anand, S. P. Potharaju, Swaroop Mishra, Pei Zhou, Aditya Gupta, et al. 2024. “AutoMix: Automatically Mixing Language Models.” *Advances in Neural Information Processing Systems* 37. https://proceedings.neurips.cc/paper_files/paper/2024/hash/ecda225cb187b40ea8edc1f46b03ffda-Abstract-Conference.html.
+Aggarwal, Pranjal, Aman Madaan, Ankit Anand, Srividya Pranavi Potharaju, Swaroop Mishra, Pei Zhou, Aditya Gupta, et al. 2024. “AutoMix: Automatically Mixing Language Models.” *Advances in Neural Information Processing Systems* 37. https://proceedings.neurips.cc/paper_files/paper/2024/hash/ecda225cb187b40ea8edc1f46b03ffda-Abstract-Conference.html.
 
 Angelopoulos, Anastasios N., Stephen Bates, Adam Fisch, Lihua Lei, and Tal Schuster. 2024. “Conformal Risk Control.” In *International Conference on Learning Representations*. https://openreview.net/forum?id=33XGfHLtZg.
 
 Chen, Lingjiao, Matei Zaharia, and James Zou. 2024. “FrugalGPT: How to Use Large Language Models While Reducing Cost and Improving Performance.” *Transactions on Machine Learning Research*. https://openreview.net/forum?id=cSimKw5p6R.
 
-Chen, T.-R. 2026. “Resample or Reroute? Budget-Aware Test-Time Model Selection for Large Language Models.” arXiv preprint arXiv:2607.08665. https://arxiv.org/abs/2607.08665.
+Chen, Teng-Ruei. 2026. “Resample or Reroute? Budget-Aware Test-Time Model Selection for Large Language Models.” arXiv preprint arXiv:2607.08665. https://arxiv.org/abs/2607.08665.
 
 Chen, Zhiyu, Wenhu Chen, Charese Smiley, Sameena Shah, Iana Borova, Dylan Langdon, Reema Moussa, et al. 2021. “FinQA: A Dataset of Numerical Reasoning over Financial Data.” In *Proceedings of the 2021 Conference on Empirical Methods in Natural Language Processing*, 3697–3711. Association for Computational Linguistics. https://doi.org/10.18653/v1/2021.emnlp-main.300.
 
@@ -20,7 +20,9 @@ Dekoninck, Jasper, Maximilian Baader, and Martin Vechev. 2025. “A Unified Appr
 
 Ding, Dujian, Ankur Mallick, Chi Wang, Robert Sim, Subhabrata Mukherjee, Victor Rühle, Laks V. S. Lakshmanan, and Ahmed H. Awadallah. 2024. “Hybrid LLM: Cost-Efficient and Quality-Aware Query Routing.” In *International Conference on Learning Representations*. https://proceedings.iclr.cc/paper_files/paper/2024/hash/b47d93c99fa22ac0b377578af0a1f63a-Abstract-Conference.html.
 
-Ding, Dujian, Ankur Mallick, Shaokun Zhang, Chi Wang, Daniel Madrigal, Mirian Del Carmen Hipolito Garcia, Menglin Xia, et al. 2025. “BEST-Route: Adaptive LLM Routing with Test-Time Optimal Compute.” In *Proceedings of the 42nd International Conference on Machine Learning*, 13870–13884. PMLR 267. https://proceedings.mlr.press/v267/ding25d.html.
+Ding, Dujian, Ankur Mallick, Shaokun Zhang, Chi Wang, Daniel Madrigal, Mirian Del Carmen Hipolito Garcia, Menglin Xia, Laks V. S. Lakshmanan, Qingyun Wu, and Victor Rühle. 2025. “BEST-Route: Adaptive LLM Routing with Test-Time Optimal Compute.” In *Proceedings of the 42nd International Conference on Machine Learning*, 13870–13884. PMLR 267. https://proceedings.mlr.press/v267/ding25d.html.
+
+Dou, Yifan, Shikan Fang, and Shibo Li. 2026. “Conformal Cascade: Distribution-Free Accuracy Guarantees for Multi-Tier LLM Inference.” arXiv preprint arXiv:2607.25018. https://arxiv.org/abs/2607.25018.
 
 Geifman, Yonatan, and Ran El-Yaniv. 2019. “SelectiveNet: A Deep Neural Network with an Integrated Reject Option.” In *Proceedings of the 36th International Conference on Machine Learning*, 2151–2159. PMLR 97. https://proceedings.mlr.press/v97/geifman19a.html.
 
@@ -28,11 +30,11 @@ Gou, Zhibin, Zhihong Shao, Yeyun Gong, Yelong Shen, Yujiu Yang, Nan Duan, and We
 
 Guo, Chuan, Geoff Pleiss, Yu Sun, and Kilian Q. Weinberger. 2017. “On Calibration of Modern Neural Networks.” In *Proceedings of the 34th International Conference on Machine Learning*, 1321–1330. PMLR 70. https://proceedings.mlr.press/v70/guo17a.html.
 
-Huang, Jie, Xinyun Chen, Swaroop Mishra, Huaixiu Steven Zheng, Adams Wei Yu, Xinyang Song, and Denny Zhou. 2024. “Large Language Models Cannot Self-Correct Reasoning Yet.” In *International Conference on Learning Representations*. https://openreview.net/forum?id=IkmD3fKBPQ.
+Huang, Jie, Xinyun Chen, Swaroop Mishra, Huaixiu Steven Zheng, Adams Wei Yu, Xinying Song, and Denny Zhou. 2024. “Large Language Models Cannot Self-Correct Reasoning Yet.” In *International Conference on Learning Representations*. https://openreview.net/forum?id=IkmD3fKBPQ.
 
 Jiang, Zhengbao, Jun Araki, Haibo Ding, and Graham Neubig. 2021. “How Can We Know When Language Models Know? On the Calibration of Language Models for Question Answering.” *Transactions of the Association for Computational Linguistics* 9: 962–977. https://doi.org/10.1162/tacl_a_00407.
 
-Lee, M., K. Kim, T. Kim, and S. Park. 2024. “Selective Generation for Controllable Language Models.” *Advances in Neural Information Processing Systems* 37. https://doi.org/10.52202/079017-1600.
+Lee, Minjae, Kyungmin Kim, Taesoo Kim, and Sangdon Park. 2024. “Selective Generation for Controllable Language Models.” *Advances in Neural Information Processing Systems* 37: 50494–50527. https://doi.org/10.52202/079017-1600.
 
 Liu, Jiawei, Chunqiu Steven Xia, Yuyao Wang, and Lingming Zhang. 2023. “Is Your Code Generated by ChatGPT Really Correct? Rigorous Evaluation of Large Language Models for Code Generation.” *Advances in Neural Information Processing Systems* 36. https://proceedings.neurips.cc/paper_files/paper/2023/hash/43e9d647ccd3e4b7b5baab53f0368686-Abstract.html.
 
@@ -44,21 +46,10 @@ Tayebati, Sina, Divake Kumar, Nastaran Darabi, Dinithi Jayasuriya, Theja Tulaban
 
 Tian, Runchu, Yining Ye, Yujia Qin, Xin Cong, Yankai Lin, Yinxu Pan, Yesai Wu, et al. 2024. “DebugBench: Evaluating Debugging Capability of Large Language Models.” In *Findings of the Association for Computational Linguistics: ACL 2024*, 4173–4198. Association for Computational Linguistics. https://doi.org/10.18653/v1/2024.findings-acl.247.
 
-Wu, H., S. Manoharan, F. Tu, J. Zhao, and J. Wan. 2026. “RLM-Cascade: Response-Level Speculative Decoding for Cost-Efficient LLM API Serving.” arXiv preprint. https://arxiv.org/abs/2606.22840.
+Wu, Haifeng, Srinivasan Manoharan, Fangbo Tu, Junhua Zhao, and Jian Wan. 2026. “RLM-Cascade: Response-Level Speculative Decoding for Cost-Efficient LLM API Serving.” arXiv preprint arXiv:2606.22840. https://arxiv.org/abs/2606.22840.
 
 Yue, Murong, Jie Zhao, Min Zhang, Liang Du, and Ziyu Yao. 2024. “Large Language Model Cascades with Mixture of Thought Representations for Cost-Efficient Reasoning.” In *International Conference on Learning Representations*. https://proceedings.iclr.cc/paper_files/paper/2024/hash/5de11e930c1bbfda5d4fc9d2b0924032-Abstract-Conference.html.
 
 Zhang, Yunxiang, Muhammad Khalifa, Lajanugen Logeswaran, Jaekyeom Kim, Moontae Lee, Honglak Lee, and Lu Wang. 2024. “Small Language Models Need Strong Verifiers to Self-Correct Reasoning.” In *Findings of the Association for Computational Linguistics: ACL 2024*, 15637–15653. Association for Computational Linguistics. https://doi.org/10.18653/v1/2024.findings-acl.924.
 
----
-
-## Reference-use rule for the final proposal
-
-The final COMP6002 document should use a consistent **Chicago Author-Date** in-text format, for example:
-
-- one/two authors: `(Geifman and El-Yaniv 2019)`;
-- three or more authors: `(Guo et al. 2017)`;
-- multiple sources: `(Ding et al. 2024; Ong et al. 2025)`;
-- preprints should be clearly described as preprints in the prose/reference entry when their publication status is relevant.
-
-This file contains only sources used in the current proposal sections. The broader literature register remains available under `literature/Reference_Register.csv`.
+Zhu, Fengbin, Wenqiang Lei, Youcheng Huang, Chao Wang, Shuo Zhang, Jiancheng Lv, Fuli Feng, and Tat-Seng Chua. 2021. “TAT-QA: A Question Answering Benchmark on a Hybrid of Tabular and Textual Content in Finance.” In *Proceedings of the 59th Annual Meeting of the Association for Computational Linguistics and the 11th International Joint Conference on Natural Language Processing (Volume 1: Long Papers)*, 3277–3287. Association for Computational Linguistics. https://doi.org/10.18653/v1/2021.acl-long.254.

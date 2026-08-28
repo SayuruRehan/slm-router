@@ -67,7 +67,21 @@ TRACER is particularly relevant to systems in which:
 
 The project remains **risk-focused**. Strong-model call rate, token usage, latency, and API cost are measured as descriptive engineering outcomes, not as the primary optimisation objective. This prevents cost savings from being mistaken for success if final correctness worsens.
 
-## 3.5 Expected Research Contributions
+## 3.5 Stakeholder Impact
+
+The significance of TRACER can be expressed in terms of the stakeholders who would use, evaluate, or be affected by SLM-based systems.
+
+| Stakeholder | Expected impact |
+|---|---|
+| **AI/ML researchers** | Provides a reproducible formulation and evaluation framework for studying post-response action risk, calibration, repair damage, and tri-action routing. |
+| **AI application developers and platform engineers** | Provides evidence on when an SLM response can be accepted and when a stronger model should repair or independently regenerate an answer, helping engineers design more reliability-aware inference pipelines. |
+| **Organisations and product owners deploying SLMs** | Provides a risk-first basis for deciding when stronger-model intervention is justified. Cost, token use, and latency remain secondary measures, so efficiency gains are not treated as successful if final correctness worsens. |
+| **End users of SLM-enabled applications** | The intended downstream benefit is a lower probability of receiving an incorrect final answer, together with more conservative handling of cases whose estimated risk remains high. |
+| **Evaluators and future research teams** | Provides versioned datasets, validators, prompts, risk definitions, and experiment artefacts that can be reused or extended to other models and domains. |
+
+TRACER does not claim that the same impact will automatically generalise to unrestricted conversational applications. The proposal evaluates this significance first in code and numerical-reasoning domains where correctness can be measured objectively.
+
+## 3.6 Expected Research Contributions
 
 If the study succeeds, the expected contributions are:
 

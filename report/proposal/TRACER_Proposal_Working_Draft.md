@@ -1,46 +1,34 @@
-# TRACER Research Proposal — Working Draft
+# TRACER Research Proposal — Repository Status
 
-## TRACER: Tri-Action Risk Assessment and Calibration for Execution Routing of Small Language Model Responses
+## Canonical integrated draft
 
+Use:
 
-## Proposal sections
+`report/proposal/TRACER_Research_Proposal_Integrated_Draft.md`
 
-- **Executive Summary + Section 1:** `01_Executive_Summary_and_Introduction.md`
-- **Section 2 — Background and Literature Review:** `02_Background_and_Literature_Review.md`
-- **Section 3 — Innovation and Significance:** `03_Innovation_and_Significance.md`
-- **Section 4 — Methodology, Evaluation, Data Management and Ethics:** `04_Methodology_Evaluation_Data_Ethics.md`
-- **Section 5 — Project Management Plan:** `05_Project_Management_Plan.md`
-- **Section 6 — Chicago Author-Date References:** `06_Chicago_References.md`
+This file contains the integrated Executive Summary and Sections 1–6.
 
-## Supporting appendices
+## Source sections
 
+- `01_Executive_Summary_and_Introduction.md`
+- `02_Background_and_Literature_Review.md`
+- `03_Innovation_and_Significance.md`
+- `04_Methodology_Evaluation_Data_Ethics.md`
+- `05_Project_Management_Plan.md`
+- `06_Chicago_References.md`
+
+## Supporting material
+
+- `figures/tracer_project_gantt.png`
 - `Appendix_A_Technical_Specification.md`
 - `Appendix_B_Detailed_Risk_Register.md`
 - `Citation_Crosscheck.md`
+- `TRACER_Proposal_Final_Review.md`
 
-## Proposal task status
+## Task status
 
-| Jira | Deliverable | Repository draft |
-|---|---|---|
-| TRACER-120 | Front matter + contributions | **Skipped in repo — handled manually** |
-| TRACER-121 | Executive Summary + Introduction | Draft present |
-| TRACER-122 | Background + Literature Review | Draft present |
-| TRACER-123 | Innovation + Significance | Draft present |
-| TRACER-124 | Methodology + Evaluation + Data + Ethics | Draft present |
-| TRACER-125 | Project Management + Gantt + Risk Plan | Draft present |
-| TRACER-126 | Chicago References + Appendices | Draft present |
-| TRACER-127 | Integrate/review/finalize | Next step after merge/team review |
+- TRACER-120: intentionally skipped in repository; front matter handled manually.
+- TRACER-121–126: drafted and integrated.
+- TRACER-127: technical integration/review complete; manual template, page-limit, signature, Blackboard, and team-approval gates remain.
 
-## Final gates for TRACER-127
-
-- [ ] Manually add official front matter and Declaration of Originality.
-- [ ] Reconcile final wording with `methodology/Research_Definition.md`.
-- [ ] Confirm the evidence-bounded research gap has team approval.
-- [ ] Confirm model/dataset choices have not changed before submission.
-- [ ] Check every in-text citation against `06_Chicago_References.md`.
-- [ ] Verify publication/preprint status for any newly added sources.
-- [ ] Transfer Mermaid diagrams to static figures if the final document format requires it.
-- [ ] Ensure no inference-time feature includes gold/reference/downstream-action information.
-- [ ] Check all tables/figures are numbered and referenced in the final document.
-- [ ] Verify the final document remains within the COMP6002 page limit.
-- [ ] Team proofread and final approval.
+Do not mark the proposal submission-ready until all unchecked items in `TRACER_Proposal_Final_Review.md` are completed.

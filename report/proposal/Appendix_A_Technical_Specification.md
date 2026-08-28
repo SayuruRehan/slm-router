@@ -4,31 +4,9 @@
 
 ## A.1 End-to-End Research Pipeline
 
-```mermaid
-flowchart LR
-    A[Source task] --> B[Initial SLM response]
-    B --> C[Pre-action feature extraction]
-    C --> D[ACRE]
-    D --> E1[R_ACCEPT]
-    D --> E2[R_REPAIR]
-    D --> E3[R_REGENERATE]
+![Figure A1. TRACER end-to-end research pipeline distinguishing the inference path from offline action-outcome supervision.](figures/tracer_architecture_pipeline.png)
 
-    B --> F1[ACCEPT outcome]
-    B --> F2[REPAIR with stronger model]
-    A --> F3[Independent REGENERATE]
-
-    F1 --> G[Objective validator]
-    F2 --> G
-    F3 --> G
-
-    G --> H[Offline action labels]
-    H --> I[Train/calibrate ACRE]
-
-    E1 --> J[Risk-controlled policy]
-    E2 --> J
-    E3 --> J
-    J --> K[Selected final action]
-```
+**Figure A1.** TRACER research pipeline. The action outcomes and objective validators are used for offline supervision/evaluation; the deployed ACRE routing decision uses only pre-action features. Gold/reference answers and downstream action outcomes are not inference-time features.
 
 The lower branch (`F1/F2/F3 -> validator -> labels`) is the **offline supervision/evaluation path**. The ACRE inference path does not consume gold answers or future action outcomes.
 
