@@ -1,73 +1,42 @@
-# TRACER-127 Final Integration and Submission-Readiness Review
+# TRACER-127 Final Integration and Supervisor-Requirement Review
 
-**Review date:** 28 August 2026  
-**Scope:** Repository proposal body only. Front matter is intentionally manual.
+**Scope:** Final proposal draft before official-template/signature completion.
 
-## Integration result
+## Supervisor requirements
 
-- [x] Executive Summary and Introduction integrated.
-- [x] Background and Literature Review integrated.
-- [x] Innovation and Significance integrated.
-- [x] Methodology, Evaluation, Data Management, Ethics, and Threats integrated.
-- [x] Project Management Plan integrated.
-- [x] Chicago Author-Date bibliography integrated.
-- [x] Gantt chart exported as a static PNG for document use.
-- [x] Technical and risk appendices remain available as optional supporting material.
-- [x] One integrated main-body file created: `TRACER_Research_Proposal_Integrated_Draft.md`.
+- [x] The proposal body is designed for the **20-page maximum excluding References and Appendices**.
+- [x] Member contributions are included as separate two-column **Task / Summary** tables.
+- [x] Expected key findings/research outcomes explicitly state what the study plans to find out.
+- [x] Research deliverables are listed explicitly.
+- [x] Significance includes stakeholder-by-stakeholder impact.
+- [x] Data management, privacy, ethics, generated-code safety, and research-integrity concerns are addressed where relevant.
+- [x] Agile and Scrum are explained, including the one-week sprint process and project artefacts.
+- [x] The WBS identifies responsible member(s) for each work package.
+- [x] Chicago Author-Date referencing is retained.
+- [x] Appendix C includes a snapshot of current committed dataset rows.
+- [x] Appendix D includes current development/PoC progress evidence.
 
-## Consistency audit
+## Consistency checks
 
-- [x] Title consistently uses **TRACER: Tri-Action Risk Assessment and Calibration for Execution Routing of Small Language Model Responses**.
-- [x] ACRE consistently means **Action-Conditional Risk Estimator**.
-- [x] Action names are consistently **ACCEPT / REPAIR / REGENERATE**.
-- [x] Primary metric remains **final incorrect-response rate**.
-- [x] Cost/latency remain secondary descriptive measures.
-- [x] Primary SLM is Qwen3-4B-Instruct-2507.
-- [x] Cross-SLM evaluation uses Gemma 3 4B IT.
-- [x] Stronger model is GPT-4.1.
-- [x] FinQA is primary numerical benchmark; TAT-QA remains optional.
-- [x] No TriRoute, Llama, or Qwen2.5 terminology is present in the proposal body.
-- [x] Gold/reference/downstream action outcomes are prohibited as inference-time ACRE features.
-- [x] Unresolved/abstention is not represented as a fourth learned action.
-- [x] Research-gap wording is evidence-bounded rather than absolute.
+- [x] Frozen TRACER title is used.
+- [x] ACRE = Action-Conditional Risk Estimator.
+- [x] ACCEPT / REPAIR / REGENERATE definitions are consistent.
+- [x] Final incorrect-response rate remains the primary outcome.
+- [x] Cost/latency remain descriptive secondary outcomes.
+- [x] Qwen3-4B-Instruct-2507, Gemma 3 4B IT, and GPT-4.1 roles remain consistent.
+- [x] Gold/reference/downstream action outcomes are prohibited as inference-time features.
+- [x] Research-gap wording remains evidence-bounded.
 
-## Citation/reference audit
+## Remaining manual submission gates
 
-- [x] In-text citations use Chicago Author-Date style.
-- [x] All citations in the current integrated draft have bibliography entries.
-- [x] 2026 arXiv-only works are explicitly marked as preprints.
-- [x] AutoMix and self-correction author-name errors found during review were corrected.
-- [x] Conformal Cascade and TAT-QA are now explicitly cited where used.
-- [ ] Final citation check must be repeated if text is edited during official-template formatting.
+- [ ] Insert the official university cover/front matter where required.
+- [ ] Insert the official Declaration of Originality and obtain all required signatures.
+- [ ] Review the member-contribution wording with all three members and edit if any work is missing.
+- [ ] Place the DOCX content into the official COMP6002 template if a separate template is mandatory.
+- [ ] Confirm the latest Blackboard/lecture announcements.
+- [ ] Re-check that the rendered proposal body before References does not exceed 20 pages after any final manual template changes.
+- [ ] Complete final team peer review and PDF page-by-page inspection.
 
-## Figures and tables
+## Final appendix selection
 
-- [x] Project Gantt chart has a static PNG: `figures/tracer_project_gantt.png`.
-- [x] Major methodology/project-management tables have descriptive headings in their sections.
-- [x] Architecture/action details are available in Appendix A.
-- [ ] In the final Word/PDF template, add sequential figure/table numbers and cross-references if required by COMP6002 formatting guidance.
-- [ ] Confirm every figure remains readable after page scaling.
-
-## Provisional length check
-
-Current integrated draft word count: **7,844 words**.  
-Approximate main body before references: **6,709 words**.  
-Approximate bibliography/reference text: **1,135 words**.
-
-This is a **page-pressure check only**. A true 20-page compliance result cannot be claimed until the content is placed into the official COMP6002 template with its required font, margins, spacing, tables, figures, front matter, and references.
-
-## Manual submission gates that remain
-
-- [ ] Add the official front matter manually.
-- [ ] Complete the Individual Contributions section.
-- [ ] Insert the official Declaration of Originality.
-- [ ] Obtain all required signatures.
-- [ ] Place the integrated body into the official COMP6002 template.
-- [ ] Confirm the final rendered document is **20 pages or fewer**.
-- [ ] Check the latest Blackboard/lecture announcements and template guidance.
-- [ ] Team performs final peer review and explicitly agrees the proposal is submission-ready.
-- [ ] Export the final document/PDF and inspect every page before submission.
-
-## Recommendation for the optional appendices
-
-To protect the 20-page limit, do **not** include Appendix A or Appendix B in the submitted proposal unless the official guidance excludes appendices from the page limit or the main text requires the extra detail. The mandatory proposal body is already technically complete without them.
+The final DOCX includes Appendix A (technical specification), Appendix C (dataset snapshot), and Appendix D (current PoC progress). The detailed project risk register remains as a repository markdown artefact but is not embedded in the final Word draft because the body already contains a readable risk-management table and the seven-column appendix table reduces document readability.
