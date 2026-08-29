@@ -13,7 +13,7 @@
     "check_c_cosine_diagnostic_only": 0.9986228449811931,
     "outcome": "syntax_error",
     "manual_verdict": null,
-    "latency_sec": 18.614760875701904,
+    "latency_sec": 18.528891801834106,
     "prompt_tokens": 2002,
     "eval_tokens": 512
   },
@@ -31,7 +31,7 @@
     "check_c_cosine_diagnostic_only": 0.9967369611291719,
     "outcome": "syntax_error",
     "manual_verdict": null,
-    "latency_sec": 2.961611032485962,
+    "latency_sec": 2.755201816558838,
     "prompt_tokens": 287,
     "eval_tokens": 93
   },
@@ -49,7 +49,7 @@
     "check_c_cosine_diagnostic_only": 0.9785714285714285,
     "outcome": "incorrect",
     "manual_verdict": null,
-    "latency_sec": 1.3111188411712646,
+    "latency_sec": 1.2381830215454102,
     "prompt_tokens": 198,
     "eval_tokens": 33
   },
@@ -67,7 +67,7 @@
     "check_c_cosine_diagnostic_only": 0.9994811239501126,
     "outcome": "incorrect",
     "manual_verdict": null,
-    "latency_sec": 8.570576190948486,
+    "latency_sec": 7.564018249511719,
     "prompt_tokens": 471,
     "eval_tokens": 278
   },
@@ -85,7 +85,7 @@
     "check_c_cosine_diagnostic_only": 0.9970840773003562,
     "outcome": "incorrect",
     "manual_verdict": null,
-    "latency_sec": 2.8508598804473877,
+    "latency_sec": 2.8634231090545654,
     "prompt_tokens": 199,
     "eval_tokens": 98
   },
@@ -103,7 +103,7 @@
     "check_c_cosine_diagnostic_only": 0.9844329512258057,
     "outcome": "syntax_error",
     "manual_verdict": null,
-    "latency_sec": 5.921458959579468,
+    "latency_sec": 5.811400890350342,
     "prompt_tokens": 366,
     "eval_tokens": 206
   },
@@ -121,7 +121,7 @@
     "check_c_cosine_diagnostic_only": 0.9616668882919606,
     "outcome": "syntax_error",
     "manual_verdict": null,
-    "latency_sec": 2.814249038696289,
+    "latency_sec": 2.6595890522003174,
     "prompt_tokens": 200,
     "eval_tokens": 91
   },
@@ -139,7 +139,7 @@
     "check_c_cosine_diagnostic_only": 1.0000000000000002,
     "outcome": "correct",
     "manual_verdict": null,
-    "latency_sec": 3.3557910919189453,
+    "latency_sec": 3.2554938793182373,
     "prompt_tokens": 250,
     "eval_tokens": 116
   },
@@ -157,7 +157,7 @@
     "check_c_cosine_diagnostic_only": 0.9994277938319958,
     "outcome": "incorrect",
     "manual_verdict": null,
-    "latency_sec": 9.286226034164429,
+    "latency_sec": 9.338810682296753,
     "prompt_tokens": 548,
     "eval_tokens": 339
   },
@@ -175,7 +175,7 @@
     "check_c_cosine_diagnostic_only": 0.9954149248763042,
     "outcome": "incorrect",
     "manual_verdict": null,
-    "latency_sec": 4.643824815750122,
+    "latency_sec": 4.00661039352417,
     "prompt_tokens": 309,
     "eval_tokens": 142
   }

@@ -1,0 +1,79 @@
+# TRACER Drafting Model Selection: A Benchmark-Backed Decision Framework
+
+## TL;DR
+- **Parameter band:** Choose the **7–8B band as the primary drafter and a 3–4B band as the low-resource fallback.** Sub-2B models are ruled out for the drafting role: they both score too low as first-attempt drafters and suffer the worst post-training-quantization damage — precisely where cascade economics break down. Together AI's Minions engineering writeup states plainly that "local models below 3B parameters are not effective for the Minion/Minions protocols."
+- **Model family:** **Qwen is the correct family for both TRACER domains,** but the best exact checkpoint differs by domain: use **Qwen2.5-Coder-7B-Instruct** (Apache 2.0, official GGUF) for the code-debugging track and **Qwen2.5-7B-Instruct** (Apache 2.0, official GGUF) for the FinQA numerical-reasoning track — the coding-specialized variant wins on code, the general variant wins on numerical reasoning and instruction-following.
+- **Quantization:** Run these small, heavily-trained code/math models at **Q5_K_M or Q8_0, not Q4_K_M**, because scaling-law evidence shows post-training-quantization damage concentrates in exactly this class of model (small + trained on trillions of tokens + code/arithmetic tasks).
+
+## Key Findings
+
+1. **Code accuracy scales steeply below ~7B, then plateaus.** Within Qwen2.5-Coder-Instruct, HumanEval pass@1 rises from the 1.5B tier to 84.1 (3B) and 88.4 (7B); MBPP reaches 83.5 at 7B. The 7B coder even beats models 3× larger (Qwen team report: Qwen2.5-Coder-7B-Instruct surpasses CodeStral-22B and DS-Coder-33B-Instruct on EvalPlus). A 7B coder drafter therefore accepts a large majority of easy repairs without escalation, whereas a 1.5B drafter forces the cascade to escalate far more often.
+2. **Numerical/financial reasoning scales even more steeply and is family-sensitive.** Per Nitarach et al., FinCoT (arXiv:2506.16123): "Qwen2.5-7B-Instruct achieved 69.7% accuracy on standard task prompts, substantially outperforming Llama3.1-8B-Instruct (46.3%), motivating its use as our primary model family." Sub-3B Llama models effectively collapse on FinQA-style long-form numerical QA. Below ~3B, financial numerical reasoning is not reliable enough for a useful drafter.
+3. **Quantization hurts small, heavily-trained, code/math models the most.** "Scaling Laws for Precision" (Kumar et al., arXiv:2411.04330, ICLR 2025) shows post-training-quantization degradation *increases with the number of training tokens*, formalized as a reduced "effective parameter count." A companion study (Ouyang et al., arXiv:2411.17691, ACL 2025) states verbatim: "low-bit quantization favors undertrained large language models (LLMs)… models with larger sizes or fewer training tokens experience less quantization-induced degradation (QiD)… whereas smaller models with extensive training tokens suffer significant QiD." Qwen2.5-Coder is exactly the worst case: small **and** trained on 5.5 trillion tokens. A 0.6B model shows "reasoning collapse" at 4-bit on GSM8K (arXiv:2602.13595).
+4. **Cascade/drafter literature converges on 3B–8B local models.** Minions/MinionS (Narayan et al., arXiv:2502.15964) — which evaluates financial, medical and scientific reasoning over long documents, the closest published analog to TRACER's FinQA track — uses Qwen2.5-1.5B/3B/7B and Llama-3.2-3B/Llama-3.1-8B as the local model. It reports verbatim: "MinionS with an 8B parameter local LM can recover 97.9% of the performance of remote-only systems at 18.0% of the cloud cost… With a 3B parameter local LM, MinionS achieves 93.4% of the performance of remote-only systems at 16.6% of the cloud cost." That ~4.5-point quality gap for a small marginal cost saving is the central size trade-off.
+5. **int8/Q8 quantization barely dents code-repair ability, but Q4 can.** An APR study (Kusama et al., arXiv:2508.16499) found int8 quantization changed QuixBugs repair by only about +0.5 bugs, and code-specialized SLMs — Phi-3 (3.8B) and Qwen2.5-Coder-3B-Instruct — each fixed 38/40 bugs, essentially matching Codex (39/40).
+
+## Details
+
+### DECISION 1 — Parameter-size band
+
+**Recommendation: 7–8B primary, 3–4B fallback; exclude ≤2B from the drafting role.**
+
+**Code-generation/repair scaling (sub-10B).** The Qwen2.5-Coder technical report (Hui et al., arXiv:2409.12186) and EvalPlus results give a clean scaling curve for instruct models: HumanEval pass@1 of 84.1 at 3B and 88.4 at 7B, with MBPP 73.6 (3B) and 83.5 (7B). Microsoft's Phi-4-mini (3.8B) technical report (arXiv:2503.01743) reports HumanEval 74.4, HumanEval+ 68.3, MBPP 65.3, and in the same head-to-head table places Qwen2.5-7B-Instruct at HumanEval 75.0 / MBPP 76.3 and Llama-3.2-3B-Instruct at HumanEval 62.8. **Discrepancy to flag:** an independent OpenCompass run reported only 45.12 HumanEval / 30.20 MBPP for Qwen2.5-Coder-3B-Instruct versus the 84.1 / 73.6 in the technical report (GitHub issue QwenLM/Qwen3-Coder #420, verbatim) — a reminder that vendor pass@1 numbers are optimistic and TRACER should re-benchmark its chosen checkpoint on DebugBench directly.
+
+For debugging specifically, the ESEM 2024 open-source DebugBench evaluation (Majdoub & Ben Charrada, arXiv:2409.03031) found that even 33B–70B open models scored only 43.9%–66.6% pass rate. Verbatim per-model Pass Rates from that paper's Table 2:
+
+| Model | Params | Python | Java | C++ | Overall Pass Rate |
+|---|---|---|---|---|---|
+| DeepSeek-Coder-Instruct-33B | 33B | 63.15% | 69.30% | 64.81% | **66.65%** (best) |
+| Llama3-70B | 70B | 62.23% | 53.89% | 59.73% | 58.61% |
+| WizardCoder-Instruct-33B | 33B | 57.49% | 50.53% | 58.98% | 55.37% |
+| Phind-CodeLlama-34B-v2 | 34B | 49.08% | 39.25% | 57.71% | 48.76% |
+| Code Llama-Instruct-70B | 70B | 41.65% | 39.47% | 50.62% | **43.96%** (worst) |
+
+(For reference, that paper cites GPT-4 at 75.0% and GPT-3.5 at 62.1% on the same benchmark; only DeepSeek-Coder-33B exceeded GPT-3.5, and none matched GPT-4.) This is strong support for the cascade design itself: no locally-deployable model reliably fixes buggy code alone, so a drafter *will* need a repair/regenerate backstop.
+
+**Numerical/financial reasoning scaling.** GSM8K rises from ~40.1 (Qwen2-0.5B) to 88.6 (Phi-4-mini 3.8B) to 91.6 (Qwen2.5-7B-Instruct). On FinQA-style tasks, Qwen2.5-7B-Instruct hits 69.7% zero-shot (FinCoT, arXiv:2506.16123) and Fin-R1 — a 7B model fine-tuned from Qwen2.5-7B-Instruct — reaches, verbatim, "state-of-the-art scores of 85.0 in ConvFinQA and 76.0 in FinQA" and "an average score of 75.2, securing second place overall" among all sizes tested (Liu et al., arXiv:2503.16252). By contrast, Llama-3.2-3B scored poorly on FinLFQA long-form financial QA and Llama-3.2-1B was near-zero (arXiv:2510.06426). Financial numerical reasoning is the more size-hungry of TRACER's two domains, reinforcing a 7B primary.
+
+**Quantization degradation versus scale.** The core scaling-law finding (Kumar et al., arXiv:2411.04330) is that PTQ-induced loss grows with training tokens. Ouyang et al. (arXiv:2411.17691) independently show, across 1,500+ checkpoints, that "low-bit quantization favors undertrained LLMs" and that fully-trained models degrade most. Practitioner measurements corroborate: a 1B model at Q4_K_M "loses proportionally more capability than an 8B model at Q4_K_M," code-generation quality "drops measurably below Q5," and a 0.6B model exhibits "reasoning collapse at 4-bit" on GSM8K (arXiv:2602.13595). One study even found Qwen2.5-7B (GQA architecture) lost 0.28 points under Q4 while a Llama-3-8B *improved* — so degradation is also architecture-dependent (arXiv:2603.18037). **Implication:** the smaller the drafter, the more a given quant hurts, and TRACER's tasks (code + arithmetic) are the most quant-fragile. This is a second, independent reason not to go below ~3B and to prefer Q5_K_M/Q8_0.
+
+**Deployment constraints per band (Q4_K_M unless noted).** Approximate weights footprint: 0.5B ~0.4 GB, 1.5B ~1.2 GB, 3B ~2 GB, Phi-4-mini 3.8B ~2.5 GB, 7B ~4.4–4.7 GB. CPU throughput: a 7B Q4 model runs ~8–15 tok/s on a modern DDR5 CPU; a 3.8B model is meaningfully faster (4–8 tok/s on a modern CPU per llmhardware.io, and faster on GPU); on GPU an 8B Q4 model reaches ~90–140 tok/s on an RTX 4090. On an 8 GB machine a 3–4B model is comfortable while a 7B is "borderline and will swap under load"; 16 GB unified memory is the practical minimum for smooth 7–8B. So the 7–8B drafter is low-latency on a modest GPU or 16 GB Mac, while the 3–4B fallback covers 8 GB laptops and CPU-only rigs.
+
+**What the cascade literature chooses.** Minions/MinionS (arXiv:2502.15964) explicitly states the approach "is now performant with the latest 3B-parameter models" and quantifies the size trade-off (8B local → 97.9% of remote quality at 18% cost; 3B local → 93.4% at 16.6%). AutoMix (Aggarwal et al., arXiv:2310.12963) used 7B–13B-class SLMs. FrugalGPT-style routers and DiSRouter (arXiv:2510.19208) used a tiny Qwen2.5-0.5B-Instruct purely as a *scorer/verifier*, not as the answer drafter — reinforcing that sub-1B is appropriate for the routing/decision layer but not for drafting answers. RLM-Cascade (arXiv:2606.22840) frames the same accept/verify structure as "response-level speculative decoding," applying both models to the same request in a draft-then-verify structure.
+
+### DECISION 2 — Model family/provider
+
+**Recommendation: Qwen family for both domains, with a domain split on the exact checkpoint.**
+
+- **Code track → Qwen2.5-Coder-7B-Instruct.** At matched size it is the strongest open coder: HumanEval 88.4 / MBPP 83.5, beating the general Qwen2.5-7B-Instruct (HumanEval 84.8 / MBPP 79.2), Phi-4-mini 3.8B (74.4 / 65.3), Llama-3.2-3B (62.8 HumanEval), and even the 16B-MoE DeepSeek-Coder-V2-Lite-Instruct (81.1 HumanEval / 68.8 MBPP+). The coding-specialization gain over the same-size general Qwen model is real (~4 points HumanEval, ~4 points MBPP) and larger at smaller sizes. Qwen2.5-Coder is trained on 5.5 trillion tokens including source code, text-code grounding, and synthetic data.
+- **FinQA track → Qwen2.5-7B-Instruct.** For numerical reasoning, answer parseability, and program/answer consistency, the general instruct model is the better base: MATH 75.5, GSM8K 91.6, and 69.7% zero-shot financial reasoning. It is the backbone chosen by essentially every recent financial-reasoning fine-tune — Fin-R1, DianJin-R1, Agentar-Fin-R1, and Fino1 all build on Qwen2.5-7B/Qwen3-8B (with Qwen the dominant pick; Fino1-8B is the Llama-3.1-8B exception).
+- **Low-resource fallbacks:** Qwen2.5-Coder-3B-Instruct for code and Phi-4-mini-3.8B (MIT license, GSM8K 88.6, HumanEval 74.4) for numerical reasoning on 8 GB / CPU-only hardware.
+
+**Licensing.** Per the Qwen team blog (verbatim): "Qwen2.5-Coder 0.5B / 1.5B / 7B / 14B / 32B are licensed under Apache 2.0, while 3B is under Qwen-Research license." The **3B variants' Qwen-Research license is non-commercial** — a material caveat if TRACER's outputs are ever commercialized. Phi-4-mini is **MIT**. Llama 3.2 uses the Llama Community License. Official GGUF quantizations exist for Qwen2.5-Coder-7B-Instruct (q2_K…q8_0) and are one-command installable via Ollama; Phi-4-mini ships an official/Unsloth GGUF (~2.5 GB at Q4_K_M). All recommended models are instruction-tuned; Coder-7B supports full 128K context via YaRN (32K native in the GGUF build).
+
+**Does standalone benchmark score predict drafter quality?** Only partially. Minions shows the *family/generation/size* of the local model materially moves end-to-end cascade quality (8B vs 3B ≈ 4.5 points), so higher standalone scores do help. But the Precise Debugging Benchmark (arXiv:2604.17338) shows unit-test pass rate and *edit precision* diverge sharply — models often "regenerate" rather than minimally repair — so for the debugging track TRACER's decision layer should treat the drafter's output as a candidate to be verified by tests, not trusted on benchmark reputation alone.
+
+### Comparison table (top candidates)
+
+| Model | Params | Provider | Code (HumanEval / MBPP) | Reasoning/Math | License | GGUF/Ollama | ~Q4_K_M footprint |
+|---|---|---|---|---|---|---|---|
+| **Qwen2.5-Coder-7B-Instruct** | 7.6B | Alibaba | **88.4 / 83.5** | GSM8K 83.9 | Apache 2.0 | Official GGUF, Ollama | ~4.7 GB |
+| **Qwen2.5-7B-Instruct** | 7.6B | Alibaba | 84.8 / 79.2 | **MATH 75.5, GSM8K 91.6, FinQA ~69.7% 0-shot** | Apache 2.0 | Official GGUF, Ollama | ~4.7 GB |
+| Qwen2.5-Coder-3B-Instruct | 3.1B | Alibaba | 84.1 / 73.6 (report); 45.1 / 30.2 (OpenCompass) | — | **Qwen-Research (non-commercial)** | Official GGUF | ~2.0 GB |
+| Phi-4-mini-instruct | 3.8B | Microsoft | 74.4 / 65.3 | GSM8K 88.6, MATH 64 | MIT | Official/Unsloth GGUF | ~2.5 GB |
+| DeepSeek-Coder-V2-Lite-Instruct | 16B (2.4B active) | DeepSeek | 81.1 / 68.8 (MBPP+) | — | DeepSeek license | Community GGUF | ~10+ GB |
+
+## Recommendations
+
+1. **Stage 1 (build baseline):** Deploy **Qwen2.5-Coder-7B-Instruct** (code) and **Qwen2.5-7B-Instruct** (FinQA) at **Q8_0** as the drafters, holding quantization as a controlled variable while establishing accept/edit/regenerate baselines. Both are Apache 2.0 and run on a 16 GB Mac or 8 GB+ GPU.
+2. **Stage 2 (tune quantization):** Drop to **Q5_K_M** and measure DebugBench pass rate and FinQA program/answer consistency. **Threshold to act:** if accuracy drops >2 points versus Q8_0, stay at Q8_0 — scaling-law evidence predicts small-but-real code/arithmetic degradation for these heavily-trained small models. Only move to Q4_K_M if RAM forces it, and re-verify parseability.
+3. **Stage 3 (low-resource variant):** If TRACER must run on 8 GB / CPU-only hardware, switch to **Qwen2.5-Coder-3B-Instruct** (code; note the non-commercial license) and **Phi-4-mini-3.8B** (FinQA; MIT). **Threshold to escalate back to 7B:** if the drafter's accept-rate falls so far that escalation frequency erases the cascade's cost/latency advantage — Minions' measured 3B→8B gap (93.4%→97.9% quality) is the empirical guide.
+4. **Do not use sub-2B models as drafters.** Reserve 0.5B–1.5B models (e.g., Qwen2.5-0.5B-Instruct) only for the *decision/scoring layer*, mirroring FrugalGPT and DiSRouter, which use exactly this size as a verifier rather than an answer generator.
+5. **Re-benchmark the exact GGUF checkpoint** on DebugBench and FinQA before finalizing — the OpenCompass/technical-report discrepancy (45.1 vs 84.1 HumanEval for the 3B coder) shows vendor numbers can overstate real pass@1 by tens of points.
+
+## Caveats
+- **Benchmark-number conflicts are real and flagged inline:** Qwen2.5-Coder-3B HumanEval is 84.1 (vendor) vs 45.1 (OpenCompass); treat all vendor pass@1 figures as an upper bound and reproduce them locally.
+- **Quantization × architecture interactions are unsettled:** one study shows Qwen2.5-7B (GQA) degrading under Q4 while a Llama-3-8B improved — TRACER should verify quantization effects empirically rather than assume monotonic behavior.
+- **Standalone score ≠ drafter utility:** debugging benchmarks reward wholesale regeneration over minimal, precise repair (Precise Debugging Benchmark, arXiv:2604.17338), so a high HumanEval score may overstate a model's value as a *precise* first-attempt fixer whose edits are cheap for the decision layer to verify.
+- **The 3B non-commercial license** on Qwen2.5-Coder-3B is a deployment risk if TRACER outputs are ever commercialized; Phi-4-mini (MIT) or Qwen2.5-Coder-1.5B (Apache 2.0) are cleaner fallbacks.
+- **Source quality:** the peer-reviewed/primary anchors are the arXiv papers cited for scaling laws (2411.04330, 2411.17691), cascades (2502.15964, 2310.12963), and benchmarks (2409.12186, 2503.01743, 2409.03031, 2503.16252, 2506.16123). Several throughput, footprint, and market-ranking figures come from 2026 vendor and community blogs and should be treated as indicative rather than authoritative.
