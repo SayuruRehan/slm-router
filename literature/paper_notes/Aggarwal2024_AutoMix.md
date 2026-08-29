@@ -22,8 +22,8 @@
 }
 ```
 
-**Date Read:** Not yet read
-**Reading Time:** —
+**Date Read:** 03.08.2026
+**Reading Time:** 30 mins
 
 ---
 

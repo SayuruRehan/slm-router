@@ -1,12 +1,33 @@
+# Python
 .venv/
-.DS_Store
+venv/
+env/
 __pycache__/
-*.pyc
-.pytest_cache/
-.ruff_cache/
+*.py[cod]
 *.egg-info/
-dist/
+.eggs/
 build/
-results/baselines/*.json
-results/baselines/*.csv
-!results/baselines/.gitkeep
+dist/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.ipynb_checkpoints/
+
+# Environment / secrets
+.env
+.env.*
+
+# macOS
+.DS_Store
+
+# Editors / IDEs
+.vscode/
+.idea/
+
+# Jupyter / Streamlit
+*.ipynb_checkpoints
+.streamlit/
+
+# Hugging Face / dataset caches
+.cache/
+*.cache/
